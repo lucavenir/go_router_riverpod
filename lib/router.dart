@@ -5,6 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'main.dart';
 import 'user.dart';
 
+// My favorite approach.
+// There's room for improvement, but it works fine.
+// Other approaches can be found in the /others folder
+
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     // Keep this to `true` if want to know what's going on under the hood
@@ -12,6 +16,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (state) {
       // We want to READ the state, here.
       // GoRouter is already aware of state changes through `refreshListenable`
+      // We don't want to trigger a rebuild of this provider.
       final user = ref.read(userProvider);
 
       // From here we can use the state and implement our custom logic
@@ -52,19 +57,17 @@ class RouterNotifier extends ChangeNotifier {
 
   /// Creates a Notifier to be used in GoRouter
   ///
-  /// While it is not recommended to use `ChangeNotifier` anywhere else
-  /// (reference: https://riverpod.dev/docs/concepts/providers/#different-types-of-providers),
-  /// `ChangeNotifier` is a forced choice with go_router.
+  /// GoRouter's refreshListenable only accepts a `Listenable` object:
+  /// therefore, `ChangeNotifier` is used here; since `StateNotifier` is not
+  /// a `Listenable`, this choice is forced. While there are other options, my
+  /// personal preference is to use this approach. Please check out the others/
+  /// folder for more implementation options.
   ///
-  /// GoRouter's refreshListenable only accepts a `Listenable` object as a parameter
-  /// and therefore `ChangeNotifier` is used here,
-  /// whereas `StateNotifier` is not a `Listenable`, so we can't use it.
+  /// Please recall that `ChangeNotifier` is to be avoided anywhere else.
+  /// https://riverpod.dev/docs/concepts/providers/#different-types-of-providers
   ///
-  /// Here we inject a `Ref` so that it's possible to exploit `ref.listen()` to
-  /// notify GoRouter that something's changed in our providers.
-  ///
-  /// Note how we're forced to explicitly call `notifyListeners()`
-  /// to make this work.
+  /// This implementation exploits `ref.listen()` to add a callback which
+  /// simply calls `notifyListeners()` whenever there's change onto a state.
   RouterNotifier(this._ref) {
     _ref.listen<User?>(
       userProvider,
