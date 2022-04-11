@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Comment out the implementation you're not using
+// import 'others/router2.dart';
+// import 'others/router3.dart';
 import 'router.dart';
 import 'user.dart';
 
@@ -13,7 +16,10 @@ class MyAwesomeApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
+    // Comment out the implementation you're not using
+    final router = ref.watch(routerProvider); // I like this one better
+    // final router = ref.watch(router2Provider);
+    // final router = ref.watch(router3Provider);
 
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
