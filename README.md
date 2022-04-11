@@ -1,8 +1,10 @@
 # go_router_example
 
-A simple login / logout example that showcases the use of [Riverpod] with [GoRouter]!
+A simple login / logout example that showcases the use of [Riverpod] with [GoRouter].
+This example exploits the usage of `ref.listen` and a `ChangeNotifier` to update the Router's decisions.
 
-This example surely can be improved, but it's a good start to understand how to workaround the lack of support for `StateNotifier`s in GoRouter.
+A discussion about improving this example can be found [here].
 
 [Riverpod]: https://github.com/rrousselGit/river_pod
 [GoRouter]: https://github.com/csells/go_router
+[here]: https://github.com/rrousselGit/riverpod/discussions/1357
