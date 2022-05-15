@@ -5,73 +5,72 @@ import 'package:go_router/go_router.dart';
 import 'main.dart';
 import 'user.dart';
 
-// My favorite approach.
-// There's room for improvement, but it works fine.
-// Other approaches can be found in the /others folder
-
+/// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
+  final router = RouterNotifier(ref);
+
   return GoRouter(
-    // Keep this to `true` if want to know what's going on under the hood
-    debugLogDiagnostics: true,
-    redirect: (state) {
-      // We want to READ the state, here.
-      // GoRouter is already aware of state changes through `refreshListenable`
-      // We don't want to trigger a rebuild of this provider.
-      final user = ref.read(userProvider);
-
-      // From here we can use the state and implement our custom logic
-      final areWeLoggingIn = state.location == '/login';
-
-      if (user == null) {
-        // We're not logged in
-        // So, IF we aren't in the login page, go there.
-        return areWeLoggingIn ? null : '/login';
-      }
-      // We're logged in
-
-      // At this point, IF we're in the login page, go to the home page
-      if (areWeLoggingIn) return '/';
-
-      // There's no need for a redirect at this point.
-      return null;
-    },
-    // This is crucial to make the router work with Riverpod.
-    refreshListenable: RouterNotifier(ref),
-    routes: [
-      GoRoute(
-        name: "home",
-        path: '/',
-        builder: (context, _) => const HomePage(),
-      ),
-      GoRoute(
-        name: "login",
-        path: '/login',
-        builder: (context, _) => const LoginPage(),
-      ),
-    ],
+    debugLogDiagnostics: true, // For demo purposes
+    refreshListenable: router, // This notifiies `GoRouter` for refresh events
+    redirect: router._redirectLogic, // All the logic is centralized here
+    routes: router._routes, // All the routes can be found there
   );
 });
 
+/// My favorite approach: ofc there's room for improvement, but it works fine.
+/// What I like about this is that `RouterNotifier` centralizes all the logic.
+/// The reason we use `ChangeNotifier` is because it's a `Listenable` object,
+/// as required by `GoRouter`'s `refreshListenable` parameter.
+/// Unluckily, it is not possible to use a `StateNotifier` here, since it's
+/// not a `Listenable`. Recall that `StateNotifier` is to be preferred over
+/// `ChangeNotifier`, see https://riverpod.dev/docs/concepts/providers/#different-types-of-providers
+/// There are other approaches to solve this, and they can
+/// be found in the `/others` folder.
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
 
-  /// Creates a Notifier to be used in GoRouter
-  ///
-  /// GoRouter's refreshListenable only accepts a `Listenable` object:
-  /// therefore, `ChangeNotifier` is used here; since `StateNotifier` is not
-  /// a `Listenable`, this choice is forced. While there are other options, my
-  /// personal preference is to use this approach. Please check out the others/
-  /// folder for more implementation options.
-  ///
-  /// Please recall that `ChangeNotifier` is to be avoided anywhere else.
-  /// https://riverpod.dev/docs/concepts/providers/#different-types-of-providers
-  ///
-  /// This implementation exploits `ref.listen()` to add a callback which
-  /// simply calls `notifyListeners()` whenever there's change onto a state.
+  /// This implementation exploits `ref.listen()` to add a simple callback that
+  /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
     _ref.listen<User?>(
-      userProvider,
-      (_, __) => notifyListeners(),
+      userProvider, // In our case, we're interested in the log in / log out events.
+      (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
   }
+
+  /// IMPORTANT: conceptually, we want to use `ref.read` to read providers, here.
+  /// GoRouter is already aware of state changes through `refreshListenable`
+  /// We don't want to trigger a rebuild of the surrounding provider.
+  String? _redirectLogic(GoRouterState state) {
+    final user = _ref.read(userProvider);
+
+    // From here we can use the state and implement our custom logic
+    final areWeLoggingIn = state.location == '/login';
+
+    if (user == null) {
+      // We're not logged in
+      // So, IF we aren't in the login page, go there.
+      return areWeLoggingIn ? null : '/login';
+    }
+    // We're logged in
+
+    // At this point, IF we're in the login page, go to the home page
+    if (areWeLoggingIn) return '/';
+
+    // There's no need for a redirect at this point.
+    return null;
+  }
+
+  List<GoRoute> get _routes => [
+        GoRoute(
+          name: "home",
+          path: '/',
+          builder: (context, _) => const HomePage(),
+        ),
+        GoRoute(
+          name: "login",
+          path: '/login',
+          builder: (context, _) => const LoginPage(),
+        ),
+      ];
 }
