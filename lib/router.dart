@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,7 +41,7 @@ class RouterNotifier extends ChangeNotifier {
   /// IMPORTANT: conceptually, we want to use `ref.read` to read providers, here.
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
-  String? _redirectLogic(GoRouterState state) {
+  String? _redirectLogic(BuildContext context, GoRouterState state) {
     final user = _ref.read(userProvider);
 
     // From here we can use the state and implement our custom logic

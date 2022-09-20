@@ -6,15 +6,20 @@ import '../main.dart';
 import '../user.dart';
 
 // Yet another possible approach.
+//
 // In here we build a `Listenable` object through `ValueNotifier`, which is
-// just a simple `ChangeNotifier` that calls `notifyListeners` when the value
+// just a simple `ChangeNotifier`, which calls `notifyListeners` when the value
 // changes, and that allows us to implement our custom logic.
+//
 // This implementation is a shorthand version of the first example, while still
-// maintaining some easy-to-introduce customizations. However, it has a less
-// readable implementation: here ValueNotifier exposes a useless value, which is
-// not actually being used. Furthermore, we are forced to overwrite its value to
-// trigger `notifyListeners`, even though such instruction makes no sense.
-// Simply put - this is not clean code (it works because of side effects).
+// maintaining some easy-to-introduce customizations.
+//
+// However, it has a less readable implementation and I'd discourage this.
+// Here, ValueNotifier exposes a **useless** (not actually being used) value.
+// Furthermore, we are forced to write onto the listenable to trigger rebuilds,
+// which just _feels_ like a workaround, which doesn't makes much sense.
+//
+// Simply put - this is not clean code - this works because of side effects..
 final router3Provider = Provider<GoRouter>((ref) {
   final listenable = ValueNotifier<bool>(true);
 
@@ -25,7 +30,7 @@ final router3Provider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     debugLogDiagnostics: true,
-    redirect: (state) {
+    redirect: (context, state) {
       // We want to READ the state, here.
       // GoRouter is already aware of state changes through `refreshListenable`
       // We don't want to trigger a rebuild of this provider.
