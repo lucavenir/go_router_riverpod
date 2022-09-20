@@ -40,7 +40,7 @@ class UserState extends StateNotifier<User?> {
 
   Future<void> logout() async {
     // In this example user==null iff we're logged out
-    myToken = null; // Remove the token from our perma storage FIRST
+    myToken = null; // Remove the token from our perma storage FIRST (!!)
     state = null; // No request is mocked here but I guess we could
   }
 }
