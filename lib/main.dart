@@ -24,6 +24,7 @@ class MyAwesomeApp extends ConsumerWidget {
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
       title: 'flutter_riverpod + go_router Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
