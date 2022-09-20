@@ -6,7 +6,7 @@ import 'main.dart';
 import 'user.dart';
 
 /// Caches and Exposes a [GoRouter]
-final routerProvider = Provider<GoRouter>((ref) {
+final router1Provider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
@@ -17,7 +17,8 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-/// My favorite approach: ofc there's room for improvement, but it works fine.
+/// My favorite approach: ofc there's room for improvement (see Router 4),
+/// but this works as as charm.
 /// What I like about this is that `RouterNotifier` centralizes all the logic.
 /// The reason we use `ChangeNotifier` is because it's a `Listenable` object,
 /// as required by `GoRouter`'s `refreshListenable` parameter.
