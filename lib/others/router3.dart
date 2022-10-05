@@ -37,17 +37,17 @@ final router3Provider = Provider<GoRouter>((ref) {
       final user = ref.read(userProvider);
 
       // From here we can use the state and implement our custom logic
-      final areWeLoggingIn = state.location == '/login';
+      final areWeLoggingIn = state.location == LoginPage.routeLocation;
 
       if (user == null) {
         // We're not logged in
         // So, IF we aren't in the login page, go there.
-        return areWeLoggingIn ? null : '/login';
+        return areWeLoggingIn ? null : LoginPage.routeLocation;
       }
       // We're logged in
 
       // At this point, IF we're in the login page, go to the home page
-      if (areWeLoggingIn) return '/';
+      if (areWeLoggingIn) return HomePage.routeLocation;
 
       // There's no need for a redirect at this point.
       return null;
@@ -56,13 +56,13 @@ final router3Provider = Provider<GoRouter>((ref) {
     refreshListenable: listenable,
     routes: [
       GoRoute(
-        name: "home",
-        path: '/',
+        name: HomePage.routeName,
+        path: HomePage.routeLocation,
         builder: (context, _) => const HomePage(),
       ),
       GoRoute(
-        name: "login",
-        path: '/login',
+        name: LoginPage.routeName,
+        path: LoginPage.routeLocation,
         builder: (context, _) => const LoginPage(),
       ),
     ],

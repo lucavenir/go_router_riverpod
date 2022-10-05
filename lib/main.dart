@@ -37,6 +37,8 @@ class MyAwesomeApp extends ConsumerWidget {
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
+  static String get routeName => 'home';
+  static String get routeLocation => '/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,6 +67,8 @@ class HomePage extends ConsumerWidget {
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
+  static String get routeName => 'login';
+  static String get routeLocation => '/$routeName';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

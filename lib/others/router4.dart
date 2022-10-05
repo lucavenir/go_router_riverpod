@@ -5,9 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../main.dart';
 import '../user.dart';
 
-// This version exploits GoRouter's new APIs, allowing the redirects to be...
-// ... ASYNCHRONOUS!!
-// This is big news and you'll see why in a few LOC.
+// This a first Asynchronous redirect example.
 
 final router4Provider = Provider<GoRouter>((ref) {
   final router = AsyncRouterNotifier(ref);
@@ -38,7 +36,7 @@ class AsyncRouterNotifier extends ChangeNotifier {
       // Here, we're not logged in
 
       // Therefore, no redirect needed if we're inserting credentials.
-      if (state.location == '/login') return null;
+      if (state.location == LoginPage.routeLocation) return null;
 
       // Here, we're not seeing the login page, but we're not authenticated yet.
       try {
@@ -52,12 +50,12 @@ class AsyncRouterNotifier extends ChangeNotifier {
         print(err); // MOCK
 
         // Then, redirect to login. Further customization can be done.
-        return '/login';
+        return LoginPage.routeLocation;
       } on LogoutException catch (_) {
         // This means that no attempt has been made: we've logged out!
         // Which means we just need to redirect to the login..
 
-        return '/login';
+        return LoginPage.routeLocation;
       }
     }
     // Here, we're logged in
@@ -71,13 +69,13 @@ class AsyncRouterNotifier extends ChangeNotifier {
 
   List<GoRoute> get _routes => [
         GoRoute(
-          name: "home",
-          path: '/',
+          name: HomePage.routeName,
+          path: HomePage.routeLocation,
           builder: (context, _) => const HomePage(),
         ),
         GoRoute(
-          name: "login",
-          path: '/login',
+          name: LoginPage.routeName,
+          path: LoginPage.routeLocation,
           builder: (context, _) => const LoginPage(),
         ),
       ];
