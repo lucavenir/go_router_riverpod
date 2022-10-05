@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Comment out the implementation you're not using
-// import 'router1.dart';
-// import 'others/router2.dart';
-// import 'others/router3.dart';
-import 'others/router4.dart';
+// import './others/sync/sync_router_streams.dart';
+// import './others/sync/sync_router_value_notifier.dart';
+import 'sync_router.dart';
 import 'user.dart';
 
 void main() {
@@ -18,10 +17,10 @@ class MyAwesomeApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Comment out the implementation you're not using
-    // final router = ref.watch(router1Provider);
-    // final router = ref.watch(router2Provider);
-    // final router = ref.watch(router3Provider);
-    final router = ref.watch(router4Provider); // Try the latest async redirect!
+    // final router = ref.watch(valueNotifierRouterProvider);
+    // final router = ref.watch(streamsRouterProvider);
+    // final router = ref.watch(asyncRouterProvider);
+    final router = ref.watch(syncRouterProvider);
 
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
@@ -43,9 +42,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Your phenomenal app"),
-      ),
+      appBar: AppBar(title: const Text("Your phenomenal app")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

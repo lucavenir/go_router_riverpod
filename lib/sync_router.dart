@@ -6,7 +6,7 @@ import 'main.dart';
 import 'user.dart';
 
 /// Caches and Exposes a [GoRouter]
-final router1Provider = Provider<GoRouter>((ref) {
+final syncRouterProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(

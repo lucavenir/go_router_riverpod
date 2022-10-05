@@ -45,7 +45,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 //   - It's slightly harder to manage different providers states.
 //   - It's harder to customize the `listen` behavior.
 //   - Is doesn't even save you a few LOC (it's as verbose as ever)
-final router2Provider = Provider<GoRouter>((ref) {
+final streamsRouterProvider = Provider<GoRouter>((ref) {
   final listenable = GoRouterRefreshStream(
     ref.watch(userProvider.notifier).stream,
   );

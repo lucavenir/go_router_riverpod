@@ -20,7 +20,7 @@ import '../../user.dart';
 // which just _feels_ like a workaround, which doesn't makes much sense.
 //
 // Simply put - this is not clean code - this works because of side effects..
-final router3Provider = Provider<GoRouter>((ref) {
+final valueNotifierRouterProvider = Provider<GoRouter>((ref) {
   final listenable = ValueNotifier<bool>(true);
 
   final subscription = ref.listen<User?>(userProvider, (oldUser, next) {
