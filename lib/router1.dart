@@ -29,14 +29,24 @@ final router1Provider = Provider<GoRouter>((ref) {
 /// be found in the `/others` folder.
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
+  ProviderSubscription? subscription;
 
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<User?>(
+    subscription = _ref.listen<User?>(
       userProvider, // In our case, we're interested in the log in / log out events.
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
+    _ref.onDispose(() {
+      subscription?.close();
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription?.close();
+    super.dispose();
   }
 
   /// IMPORTANT: conceptually, we want to use `ref.read` to read providers, here.

@@ -21,12 +21,22 @@ final router4Provider = Provider<GoRouter>((ref) {
 /// This approach is a copy of Router1, but allows for asynchronous redirects.
 class AsyncRouterNotifier extends ChangeNotifier {
   final Ref _ref;
+  ProviderSubscription? subscription;
 
   AsyncRouterNotifier(this._ref) {
-    _ref.listen<User?>(
+    subscription = _ref.listen<User?>(
       userProvider,
       (_, __) => notifyListeners(),
     );
+    _ref.onDispose(() {
+      subscription?.close();
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription?.close();
+    super.dispose();
   }
 
   Future<String?> _redirect(BuildContext context, GoRouterState state) async {

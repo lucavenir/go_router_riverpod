@@ -23,10 +23,11 @@ import '../user.dart';
 final router3Provider = Provider<GoRouter>((ref) {
   final listenable = ValueNotifier<bool>(true);
 
-  ref.listen<User?>(userProvider, (oldUser, next) {
+  final subscription = ref.listen<User?>(userProvider, (oldUser, next) {
     // This is just to trigger `notifyListeners` within the `ValueNotifier`
     listenable.value = !listenable.value;
   });
+  ref.onDispose(subscription.close);
 
   return GoRouter(
     debugLogDiagnostics: true,
