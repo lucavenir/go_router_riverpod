@@ -17,16 +17,14 @@ final router1Provider = Provider<GoRouter>((ref) {
   );
 });
 
-/// My favorite approach with Synchronous redirects
-/// but this works as as charm.
+/// My favorite approach with Synchronous redirects: this just works.
 /// What I like about this is that `RouterNotifier` centralizes all the logic.
 /// The reason we use `ChangeNotifier` is because it's a `Listenable` object,
 /// as required by `GoRouter`'s `refreshListenable` parameter.
 /// Unluckily, it is not possible to use a `StateNotifier` here, since it's
 /// not a `Listenable`. Recall that `StateNotifier` is to be preferred over
-/// `ChangeNotifier`, see https://riverpod.dev/docs/concepts/providers/#different-types-of-providers
-/// There are other approaches to solve this, and they can
-/// be found in the `/others` folder.
+/// `ChangeNotifier` (see https://riverpod.dev/docs/concepts/providers/#different-types-of-providers)
+/// Other synchronous examples can be found under `./others/sync`
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
   ProviderSubscription? subscription;

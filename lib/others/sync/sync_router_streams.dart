@@ -4,26 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../main.dart';
-import '../user.dart';
+import '../../main.dart';
+import '../../user.dart';
 
 // ** WARNING **
-// SINCE GOROUTER >v5 THIS EXAMPLE IS TO BE CONSIDERED ** LEGACY CODE **
+// THIS EXAMPLE IS TO BE CONSIDERED ** LEGACY CODE **
+// Since GoRouer v5, `GoRouterRefreshStream` is removed from the API.
+// This example is here just to give a workaround for legacy code bases
+// DON'T USE THIS APPROACH IF POSSIBLE
 //
-// THE FOLLOWING IS JUST A WORKAROUND FOR LEGACY CODEBASES THAT STILL
-// USE THIS APPROACH.
-//
-// ** DON'T USE THIS APPROACH IF POSSIBLE. **
-//
-// With GoRouter <v4 we wanted to exploit GoRouter's `RefreshStream`,
-// as it was made exactly for this purpose.
-//
+// If you're still here, then here's a refresher.
+// In GoRouter <v4, refreshListenable accepted a `RefreshStream`, while exposing
+// a `GoRouterRefreshStream`, for simple `Stream` interactions.
 // GoRouter >v5 doesn't expose a GoRouterRefreshStream class anymore.
 // The migration guide simply suggests to just reimplement that class.
-//
-// We can do that in a few LOC.
-// In the end, a GoRouterRefreshStream is just a ChangeNotifier with a stream
-// in it that calls `notifyListeners()` whenever the state changes.
+// We can do that in a few LOC. In the end, a GoRouterRefreshStream is just
+// a ChangeNotifier with a stream subscription in it, which simply calls
+// `notifyListeners()` whenever the stream gives a new value.
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
