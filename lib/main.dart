@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Comment out the implementation you're not using
+// import 'sync_router.dart';
 // import './others/sync/sync_router_streams.dart';
 // import './others/sync/sync_router_value_notifier.dart';
-import 'sync_router.dart';
-import 'user.dart';
+// import './others/async/simple_async_router.dart';
+import './others/async/complex_async_router.dart';
+// Comment out the async import if you're using any other examples.
+import 'models/async_user.dart';
+// import 'models/user.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyAwesomeApp()));
@@ -20,7 +24,8 @@ class MyAwesomeApp extends ConsumerWidget {
     // final router = ref.watch(valueNotifierRouterProvider);
     // final router = ref.watch(streamsRouterProvider);
     // final router = ref.watch(asyncRouterProvider);
-    final router = ref.watch(syncRouterProvider);
+    // final router = ref.watch(syncRouterProvider);
+    final router = ref.watch(complexRouterProvider);
 
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
@@ -51,7 +56,7 @@ class HomePage extends ConsumerWidget {
             const Text("This is your homepage. Horray!"),
             ElevatedButton(
               onPressed: () {
-                ref.read(userProvider.notifier).logout();
+                ref.read(authProvider.notifier).logout();
               },
               child: const Text("Logout"),
             ),
@@ -79,7 +84,7 @@ class LoginPage extends ConsumerWidget {
             const Text("Looks like you're not logged in. Let's change that."),
             ElevatedButton(
               onPressed: () async {
-                ref.read(userProvider.notifier).login(
+                ref.read(authProvider.notifier).login(
                       "myEmail",
                       "myPassword",
                     );
@@ -90,5 +95,16 @@ class LoginPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class SplashPage extends StatelessWidget {
+  const SplashPage({Key? key}) : super(key: key);
+  static String get routeName => 'splash';
+  static String get routeLocation => '/$routeName';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

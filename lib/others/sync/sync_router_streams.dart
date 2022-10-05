@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../main.dart';
-import '../../user.dart';
+import '../../models/user.dart';
 
 // ** WARNING **
 // THIS EXAMPLE IS TO BE CONSIDERED ** LEGACY CODE **
@@ -47,7 +47,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 //   - Is doesn't even save you a few LOC (it's as verbose as ever)
 final streamsRouterProvider = Provider<GoRouter>((ref) {
   final listenable = GoRouterRefreshStream(
-    ref.watch(userProvider.notifier).stream,
+    ref.watch(authProvider.notifier).stream,
   );
 
   ref.onDispose(() {
@@ -60,7 +60,7 @@ final streamsRouterProvider = Provider<GoRouter>((ref) {
       // We want to READ the state, here.
       // GoRouter is already aware of state changes through `refreshListenable`
       // We don't want to trigger a rebuild of this provider.
-      final user = ref.read(userProvider);
+      final user = ref.read(authProvider);
 
       // From here we can use the state and implement our custom logic
       final areWeLoggingIn = state.location == LoginPage.routeLocation;

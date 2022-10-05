@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../main.dart';
-import '../../user.dart';
+import '../../models/user.dart';
 
 // Yet another possible approach.
 //
@@ -23,7 +23,7 @@ import '../../user.dart';
 final valueNotifierRouterProvider = Provider<GoRouter>((ref) {
   final listenable = ValueNotifier<bool>(true);
 
-  final subscription = ref.listen<User?>(userProvider, (oldUser, next) {
+  final subscription = ref.listen<User?>(authProvider, (oldUser, next) {
     // This is just to trigger `notifyListeners` within the `ValueNotifier`
     listenable.value = !listenable.value;
   });
@@ -35,7 +35,7 @@ final valueNotifierRouterProvider = Provider<GoRouter>((ref) {
       // We want to READ the state, here.
       // GoRouter is already aware of state changes through `refreshListenable`
       // We don't want to trigger a rebuild of this provider.
-      final user = ref.read(userProvider);
+      final user = ref.read(authProvider);
 
       // From here we can use the state and implement our custom logic
       final areWeLoggingIn = state.location == LoginPage.routeLocation;

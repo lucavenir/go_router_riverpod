@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'main.dart';
-import 'user.dart';
+import 'models/user.dart';
 
 /// Caches and Exposes a [GoRouter]
 final syncRouterProvider = Provider<GoRouter>((ref) {
@@ -33,7 +33,7 @@ class RouterNotifier extends ChangeNotifier {
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
     subscription = _ref.listen<User?>(
-      userProvider, // In our case, we're interested in the log in / log out events.
+      authProvider, // In our case, we're interested in the log in / log out events.
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
     _ref.onDispose(() {
@@ -51,7 +51,7 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(BuildContext context, GoRouterState state) {
-    final user = _ref.read(userProvider);
+    final user = _ref.read(authProvider);
 
     // From here we can use the state and implement our custom logic
     final areWeLoggingIn = state.location == LoginPage.routeLocation;
