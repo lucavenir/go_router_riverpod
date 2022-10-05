@@ -6,10 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import './others/sync/sync_router_streams.dart';
 // import './others/sync/sync_router_value_notifier.dart';
 // import './others/async/simple_async_router.dart';
-import './others/async/complex_async_router.dart';
+// import './others/async/complex_async_router.dart';
+import './others/alternative.dart';
 // Comment out the async import if you're using any other examples.
-import 'models/async_user.dart';
-// import 'models/user.dart';
+// import 'models/async_user.dart';
+import 'models/user.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyAwesomeApp()));
@@ -25,8 +26,10 @@ class MyAwesomeApp extends ConsumerWidget {
     // final router = ref.watch(streamsRouterProvider);
     // final router = ref.watch(asyncRouterProvider);
     // final router = ref.watch(syncRouterProvider);
-    final router = ref.watch(complexRouterProvider);
+    // final router = ref.watch(complexRouterProvider)
+    final router = ref.watch(alternativeProvider);
 
+    print("Widgets rebuilt!");
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
