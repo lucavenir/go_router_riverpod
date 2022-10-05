@@ -12,8 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^5.0.0
-  flutter_riverpod: ^1.0.3
-  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^2.0.2
 
 dev_dependencies:
   flutter_test:
