@@ -1,5 +1,5 @@
 name: value_notifier
-description: A new Flutter project.
+description: Sync redirect w/ value notifier legacy example
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
