@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Our first frame shows the home', (tester) async {
+  testWidgets('The login / logout flow works', (tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ProviderScope(child: AsyncRouterApp()));
     await tester.pump(const Duration(milliseconds: 750));
