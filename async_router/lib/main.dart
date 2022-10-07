@@ -85,14 +85,3 @@ class LoginPage extends ConsumerWidget {
     );
   }
 }
-
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
-  static String get routeName => 'splash';
-  static String get routeLocation => '/$routeName';
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
