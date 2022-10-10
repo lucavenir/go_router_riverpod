@@ -1,0 +1,38 @@
+import 'package:complete_example/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  testWidgets('startup redirects to home when signed in', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(
+      const ProviderScope(child: MyAwesomeApp()),
+    );
+    expect(find.text('Splash Page'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(find.text('Home Page'), findsNothing);
+    expect(find.text('Splash Page'), findsNothing);
+    expect(find.text('Login Page'), findsOneWidget);
+
+    // Tap the login button
+    await tester.tap(find.bySemanticsLabel('Login'));
+    await tester.pump();
+
+    await tester.pumpAndSettle(const Duration(milliseconds: 750));
+    expect(find.text('Login Page'), findsNothing);
+    expect(find.text('Splash Page'), findsNothing);
+    expect(find.text('Home Page'), findsOneWidget);
+
+    await tester.tap(find.bySemanticsLabel('Logout'));
+    await tester.pump();
+
+    await tester.pumpAndSettle();
+    expect(find.text('Splash Page'), findsNothing);
+    expect(find.text('Home Page'), findsNothing);
+    expect(find.text("Login Page"), findsOneWidget);
+
+    return;
+  });
+}
