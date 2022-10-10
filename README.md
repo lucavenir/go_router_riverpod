@@ -13,6 +13,12 @@ Every example in here is a simple mock of a login / logout logic. Feel free to c
 
 (legacy examples are still being showcased in a dedicated folder, as a migration steps for whoever)
 
+## Which example should I read or use?
+I do realize there are _a lot_ of examples right now. I've cleaned up the folders in here and I can tell you this:
+
+1. Try the `sync_router` folder first: that's a basic integration example with synchronous redirect
+2. Then, read the `complete_example` folder and try that out. There's a lot going on there: enjoy.
+
 Please consider starring this mini-repo if you found it useful. If you didn't, or if you want to contribute in any way, a discussion about improving this example can be found [here].
 
 [Riverpod]: https://github.com/rrousselGit/river_pod
