@@ -12,9 +12,9 @@ void main() {
     expect(find.text('Splash Page'), findsOneWidget);
 
     await tester.pumpAndSettle();
-    expect(find.text('Login Page'), findsOneWidget);
     expect(find.text('Home Page'), findsNothing);
     expect(find.text('Splash Page'), findsNothing);
+    expect(find.text('Login Page'), findsOneWidget);
 
     // Tap the login button
     await tester.tap(find.bySemanticsLabel('Login'));
@@ -22,14 +22,16 @@ void main() {
 
     await tester.pumpAndSettle(const Duration(milliseconds: 750));
     expect(find.text('Login Page'), findsNothing);
+    expect(find.text('Splash Page'), findsNothing);
     expect(find.text('Home Page'), findsOneWidget);
 
     await tester.tap(find.bySemanticsLabel('Logout'));
     await tester.pump();
 
     await tester.pumpAndSettle();
-    expect(find.text("Login Page"), findsOneWidget);
+    expect(find.text('Splash Page'), findsNothing);
     expect(find.text('Home Page'), findsNothing);
+    expect(find.text("Login Page"), findsOneWidget);
 
     return;
   });

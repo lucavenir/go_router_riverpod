@@ -11,8 +11,8 @@ This is the "main" example of this repo; its objective is to define some best pr
 
 **Nonetheless**:
   - _This is a work in progress example, stay tuned_;
-  - _No one here has the arrogance to say that this simple example will be "perfect", one day_;
-  - _We can all agree that there is no magical silver bullet that fits in every possible use case._.
+  - _This has to be considered as a "best effort" example that aims to integrate as much best practices as possible_;
+  - _Nonetheless, we can all agree that there is no magical silver bullet that fits in every possible use case: use with caution._.
 
 **Dependencies**:
   - GoRouter v5

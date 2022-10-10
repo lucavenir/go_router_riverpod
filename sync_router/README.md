@@ -15,8 +15,14 @@ At the same time, our router is rebuilt, with no side effects or special caring 
 ### Is this approach advised?
 Absolutely; at this very moment I can't find any downsides to this approach. But if you find any, you're welcome to open issues or PR.
 
-### Wait, I do see unnecessary rebuilds
-Are you _absolutely sure_? Please check [this discussion](https://github.com/flutter/flutter/issues/112915#issuecomment-1269053217) first. If you're still convinced this approach doesn't work out in the end, you're welcome to open an issue or a PR.
+Always consider that the examples in this repo are tested (use `flutter test` for a quick check).
+
+### Wait a minute, I do see unnecessary rebuilds
+Are you _absolutely sure_? Before we raise red flags onto this example, consider that this `routerProvider` does trigger rebuilds on `MyAwesomeApp`, but because of the `GlobalKey<NavigatorState>()` we've set onto our router, Flutter won't trigger a rebuild _on the whole Widget tree_.
+
+Please read [this discussion](https://github.com/flutter/flutter/issues/112915#issuecomment-1269053217) for a detailed explanation.
+
+If you're still convinced this approach doesn't work out, and you want to share your thoughts, you're very welcome to open an issue or a PR.
 
 ## Getting started
 
