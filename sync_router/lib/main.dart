@@ -5,11 +5,11 @@ import 'auth.dart';
 import 'router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: TrialApp()));
+  runApp(const ProviderScope(child: MyAwesomeApp()));
 }
 
-class TrialApp extends ConsumerWidget {
-  const TrialApp({super.key});
+class MyAwesomeApp extends ConsumerWidget {
+  const MyAwesomeApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
