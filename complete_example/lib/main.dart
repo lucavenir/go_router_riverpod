@@ -1,8 +1,8 @@
-import 'package:complete_example/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'auth.dart';
+import 'router.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyAwesomeApp()));
