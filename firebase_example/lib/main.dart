@@ -49,7 +49,7 @@ class HomePage extends ConsumerWidget {
             const Text("Home Page"),
             ElevatedButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signInAnonymously();
+                await FirebaseAuth.instance.signOut();
               },
               child: const Text("Logout"),
             ),
@@ -77,7 +77,7 @@ class LoginPage extends ConsumerWidget {
             const Text("Login Page"),
             ElevatedButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+                await FirebaseAuth.instance.signInAnonymously();
               },
               child: const Text("Login"),
             ),
