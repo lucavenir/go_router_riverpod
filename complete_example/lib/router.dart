@@ -8,8 +8,7 @@ import 'main.dart';
 final _key = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
-  ref.watch(authProvider);
-  final authNotifier = ref.read(authProvider.notifier);
+  final bool isAuth = ref.watch(isUserAuthenticatedProvider);
 
   return GoRouter(
     navigatorKey: _key,
@@ -39,11 +38,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
     redirect: (context, state) {
-      // If our async state is loading, don't perform redirects, yet
-      if (authNotifier.isLoading) return null;
-
-      final isAuth = authNotifier.isAuthenticated;
-
       final isSplash = state.location == SplashPage.routeLocation;
       if (isSplash) {
         return isAuth ? HomePage.routeLocation : LoginPage.routeLocation;
