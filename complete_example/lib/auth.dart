@@ -19,6 +19,18 @@ class User {
 // TODO in the next version: Use Freezed to generate states.
 typedef AsyncUser = AsyncValue<User?>;
 
+bool wasUserAuthenticated = false;
+
+final isUserAuthenticatedProvider = Provider<bool>((ref) {
+  final userAuthentication = ref.watch(authProvider);
+
+  return wasUserAuthenticated = userAuthentication.when(
+    data: (final user) => user != null,
+    error: (final _, final __) => wasUserAuthenticated,
+    loading: () => wasUserAuthenticated,
+  );
+});
+
 final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(() {
   return AuthNotifier();
 });
