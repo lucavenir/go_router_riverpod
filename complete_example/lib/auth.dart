@@ -60,7 +60,7 @@ class AuthNotifier extends AsyncNotifier<User?> {
     // here the token should be used to perform a login request
     final logInAttempt = await Future.delayed(
       const Duration(milliseconds: 750),
-      () => Random().nextBool(),
+      () => Random().nextBool(), // mock
     );
 
     // If the attempts succeeds, return the result out

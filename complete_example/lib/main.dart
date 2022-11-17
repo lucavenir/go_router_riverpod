@@ -13,16 +13,27 @@ class MyAwesomeApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
+    final asyncRouter = ref.watch(routerProvider);
 
-    return MaterialApp.router(
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      routeInformationProvider: router.routeInformationProvider,
-      title: 'flutter_riverpod + go_router Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+    if (asyncRouter.hasValue) {
+      final router = asyncRouter.requireValue;
+      return MaterialApp.router(
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
+        routeInformationProvider: router.routeInformationProvider,
+        title: 'flutter_riverpod + go_router Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+      );
+    }
+
+    return asyncRouter.maybeWhen(
+      error: (error, stackTrace) {
+        print(error);
+        return const Text("Something went very, very wrong.");
+      },
+      orElse: () => const CircularProgressIndicator(),
     );
   }
 }
