@@ -9,11 +9,12 @@ class RiverpodLogger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
+    // TODO use a proper logger
     print('''
 {
   provider: ${provider.name ?? provider.runtimeType},
-  oldValue: ${previousValue ?? 'None'},
-  newValue: ${newValue ?? 'None'}
+  oldValue: $previousValue,
+  newValue: $newValue
 }
 ''');
     super.didUpdateProvider(provider, previousValue, newValue, container);
