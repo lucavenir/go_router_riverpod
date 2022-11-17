@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'auth.dart';
+import 'riverpod_logger.dart';
 import 'router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyAwesomeApp()));
+  runApp(
+    const ProviderScope(observers: [RiverpodLogger()], child: MyAwesomeApp()),
+  );
 }
 
 class MyAwesomeApp extends ConsumerWidget {
