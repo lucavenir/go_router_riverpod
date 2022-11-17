@@ -16,35 +16,20 @@ class MyAwesomeApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncRouter = ref.watch(routerProvider);
+    final router = ref.watch(routerProvider);
 
-    if (asyncRouter.hasValue) {
-      final router = asyncRouter.requireValue;
-      return MaterialApp.router(
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-        routeInformationProvider: router.routeInformationProvider,
-        title: 'flutter_riverpod + go_router Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-      );
-    }
-
-    return asyncRouter.maybeWhen(
-      error: (error, stackTrace) {
-        print(error);
-        return const Text("Something went very, very wrong.");
-      },
-      orElse: () => const CircularProgressIndicator(),
+    return MaterialApp.router(
+      routerConfig: router,
+      title: 'flutter_riverpod + go_router Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
     );
   }
 }
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-  static String get routeName => 'home';
-  static String get routeLocation => '/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,7 +43,7 @@ class HomePage extends ConsumerWidget {
             const Text("Home Page"),
             ElevatedButton(
               onPressed: () {
-                ref.read(authProvider.notifier).logout();
+                ref.read(authNotifierProvider.notifier).logout();
               },
               child: const Text("Logout"),
             ),
@@ -71,8 +56,6 @@ class HomePage extends ConsumerWidget {
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
-  static String get routeName => 'login';
-  static String get routeLocation => '/$routeName';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,7 +69,7 @@ class LoginPage extends ConsumerWidget {
             const Text("Login Page"),
             ElevatedButton(
               onPressed: () async {
-                ref.read(authProvider.notifier).login(
+                ref.read(authNotifierProvider.notifier).login(
                       "myEmail",
                       "myPassword",
                     );
@@ -102,8 +85,6 @@ class LoginPage extends ConsumerWidget {
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
-  static String get routeName => 'splash';
-  static String get routeLocation => '/$routeName';
 
   @override
   Widget build(BuildContext context) {

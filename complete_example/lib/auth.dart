@@ -1,108 +1,111 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class User {
-  const User({
-    required this.displayName,
-    required this.email,
-    required this.token,
-  });
+import 'user.dart';
 
-  final String displayName;
-  final String email;
-  final String token;
-}
+part 'auth.g.dart';
 
-// TODO in the next version: Use Freezed to generate states.
-typedef AsyncUser = AsyncValue<User?>;
+/// A mock of an Authenticated User
+const _dummyUser = User.signedIn(
+  id: 0,
+  displayName: "My Name",
+  email: "My Email",
+  token: "some-updated-secret-auth-token",
+);
 
-final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(() {
-  return AuthNotifier();
-});
+@riverpod
+class AuthNotifier extends _$AuthNotifier {
+  late SharedPreferences sharedPreferences;
+  static const _sharedPrefsKey = 'token';
 
-class AuthNotifier extends AsyncNotifier<User?> {
-  AuthNotifier();
-  static const _key = 'token';
+  /// Mock of the duration of a network request
+  final _networkRoundTripTime = Random().nextInt(750);
 
   @override
-  FutureOr<User?> build() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
+  FutureOr<User> build() async {
+    sharedPreferences = await SharedPreferences.getInstance();
 
-    ref.listenSelf((_, next) {
-      final val = next.valueOrNull;
-      if (val == null) {
-        sharedPreferences.remove(_key);
-        return;
-      }
-      sharedPreferences.setString(_key, val.email);
-    });
+    _persistenceRefreshLogic();
 
+    return await _loginRecoveryAttempt();
+  }
+
+  /// Tries to perform a login with the saved token on the persistant storage.
+  /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
+  Future<User> _loginRecoveryAttempt() async {
     try {
-      // This operation might fail for... reasons
-      final savedToken = sharedPreferences.getString(_key);
-      if (savedToken == null) return null;
+      final savedToken = sharedPreferences.getString(_sharedPrefsKey);
+      if (savedToken == null) {
+        throw const UnauthorizedException(
+            "Couldn't find the authentication token");
+      }
 
-      // This request might also fail
       return await _loginWithToken(savedToken);
-    } catch (error, stackTrace) {
-      // If anything goes wrong, give a non-authenticated outcome
-      await sharedPreferences.remove(_key);
-      print(error);
-      print(stackTrace);
-      return null;
+    } catch (_, __) {
+      await sharedPreferences.remove(_sharedPrefsKey);
+      return const User.signedOut();
     }
   }
 
-  Future<User?> _loginWithToken(String token) async {
-    // here the token should be used to perform a login request
+  /// Mock of a request performed on logout (might be common, or not, whatevs).
+  Future<void> logout() async {
+    await Future.delayed(Duration(milliseconds: _networkRoundTripTime));
+    state = const AsyncValue<User>.data(User.signedOut());
+  }
+
+  /// Mock of a successful login attempt, which results come from the network.
+  Future<void> login(String email, String password) async {
+    state = await AsyncValue.guard<User>(() async {
+      return Future.delayed(
+        Duration(milliseconds: _networkRoundTripTime),
+        () => _dummyUser,
+      );
+    });
+  }
+
+  /// Mock of a login request performed with a saved token.
+  /// If such request fails, this method will throw an [UnauthorizedException].
+  Future<User> _loginWithToken(String token) async {
     final logInAttempt = await Future.delayed(
-      const Duration(milliseconds: 750),
-      () => Random().nextBool(), // mock
+      Duration(milliseconds: _networkRoundTripTime),
+      () => true,
     );
 
-    // If the attempts succeeds, return the result out
-    if (logInAttempt) {
-      return const User(
-        displayName: "My Name",
-        email: "My Email",
-        token: "some-updated-secret-auth-token",
-      );
-    }
+    if (logInAttempt) return _dummyUser;
 
-    // If the attempt fails, or returns 401, or whatever, this should fail.
     throw const UnauthorizedException('401 Unauthorized or something');
   }
 
-  Future<void> logout() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
+  /// Internal method used to listen authentication state changes.
+  /// When the auth object is in a loading state, nothing happens.
+  /// When the auth object is in a error state, we choose to remove the token
+  /// Otherwise, we expect the current auth value to be reflected in our persitence API
+  void _persistenceRefreshLogic() {
+    ref.listenSelf((_, next) {
+      if (next.isLoading) return;
+      if (next.hasError) {
+        sharedPreferences.remove(_sharedPrefsKey);
+        return;
+      }
 
-    // Remove the token from persistence, first
-    await sharedPreferences.remove(_key);
-    // No request is mocked here but I guess we could: logout
-    state = const AsyncUser.data(null);
-  }
+      final val = next.requireValue;
 
-  Future<void> login(String email, String password) async {
-    // Simple mock of a successful login attempt
-    state = await AsyncUser.guard(() async {
-      return Future.delayed(
-        Duration(milliseconds: Random().nextInt(750)),
-        () => const User(
-          displayName: "My Name",
-          email: "My Email",
-          token: 'someToken',
-        ),
+      val.map<void>(
+        signedIn: (signedIn) {
+          sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
+        },
+        signedOut: (signedOut) {
+          sharedPreferences.remove(_sharedPrefsKey);
+        },
       );
     });
   }
-
-  bool get isAuthenticated => state.valueOrNull != null;
-  bool get isLoading => state.isLoading;
 }
 
+/// Simple mock of a 401 exception
 class UnauthorizedException implements Exception {
   final String message;
   const UnauthorizedException(this.message);
