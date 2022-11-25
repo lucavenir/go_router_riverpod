@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'auth.dart';
-import 'riverpod_logger.dart';
-import 'router.dart';
+import 'router/router.dart';
+import 'state/auth.dart';
+import 'utils/state_logger.dart';
 
 void main() {
   runApp(
-    const ProviderScope(observers: [RiverpodLogger()], child: MyAwesomeApp()),
+    const ProviderScope(observers: [StateLogger()], child: MyAwesomeApp()),
   );
 }
 
@@ -90,6 +90,39 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(child: Text("Splash Page")),
+    );
+  }
+}
+
+class AdminPage extends StatelessWidget {
+  const AdminPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: Text("Admin Page")),
+    );
+  }
+}
+
+class UserPage extends StatelessWidget {
+  const UserPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: Text("User Page")),
+    );
+  }
+}
+
+class GuestPage extends StatelessWidget {
+  const GuestPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: Text("Guest Page")),
     );
   }
 }

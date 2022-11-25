@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'user.dart';
+import '../entities/user.dart';
 
 part 'auth.g.dart';
 
@@ -16,6 +16,7 @@ const _dummyUser = User.signedIn(
   token: "some-updated-secret-auth-token",
 );
 
+/// This notifier holds and handles the authentication state of the application
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
   late SharedPreferences sharedPreferences;
