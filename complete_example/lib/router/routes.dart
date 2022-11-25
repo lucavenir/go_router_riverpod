@@ -38,6 +38,11 @@ class HomeRoute extends GoRouteData {
     // TODO implement route-level redirection logic based on user permissions
     return null;
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomePage();
+  }
 }
 
 @TypedGoRoute<LoginRoute>(path: LoginRoute.path)

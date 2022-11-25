@@ -7,16 +7,20 @@ import 'routes.dart';
 
 part 'router_notifier.g.dart';
 
-/// This notifier exposes nothing (void) but implements [Listenable]
-/// Long story short: this notifier is used to be passed to our router.
-/// It triggers our router's listener everytime is needed.
+/// This notifier exposes nothing (void) but implements [Listenable].
+/// This notifier is meant to just access its internal [Notifier].
+///
+/// This notifier triggers our router's listener everytime is needed.
 /// In this simple case, we do so when `auth` changes.
-/// This might look complicated at first, but instead follows good practices:
+///
+/// SIDE NOTE.
+/// This might look overcomplicated at a first glance;
+/// Instead, this method aims to follow some good some good practices:
 ///   1. It doesn't require us to pipe down any `ref` parameter
-///   2. It follows the Single-Responsibility principle: it won't uselessly try
-///      to rebuild a [GoRouter] and instead it just works as a [Listenable] implementation
-///   3. It allows for listening to multiple providers if needed, and to execute
-///      its [routerListener] calls accordingly
+///   2. Since it's not meant to be _watched_, it uselessly rebuild a [GoRouter]
+///      every time something changes
+///   3. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
+///   4. It allows for listening to multiple providers if needed
 @riverpod
 class RouterNotifier extends _$RouterNotifier implements Listenable {
   VoidCallback? routerListener;
@@ -24,18 +28,12 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
 
   @override
   Future<void> build() async {
-    final authState = await ref.watch(authNotifierProvider.future);
-    // One could watch more providers, here, and write logic accordingly
-
-    // If we're in a loading state, there's no need to notify our router.
-    // Note. This notifier will never be in a [AsyncError] state.
-    // (unless we override it, but it wouldn't make sense)
-    if (state.isLoading) return;
-
-    isAuth = authState.map(
-      signedIn: (_) => true,
-      signedOut: (_) => false,
+    isAuth = await ref.watch(
+      authNotifierProvider.selectAsync(
+          (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)),
     );
+
+    // TODO One could watch more providers, here, and write logic accordingly
 
     routerListener?.call();
   }
