@@ -12,7 +12,7 @@ This a slightly more complicated example, featuring:
 
 This is the "main" example of this repo; its objective is to define some best practices when using Riverpod + GoRouter (as opposed to other examples, which are just community-driven).
 
-**Note**. The tests are _intentionally_ not being updated. We're waiting on [this PR](https://github.com/flutter/packages/pull/2848) before testing these out.
+**Note**. The tests are _intentionally_ not being updated and the route-level redirect is missing. We're waiting on [this PR](https://github.com/flutter/packages/pull/2848) before completing this example. The rest of the example is fine, tho.
 
 **Nonetheless**:
   - _This has to be considered as a "best effort" example that aims to integrate as much best practices as possible_;
