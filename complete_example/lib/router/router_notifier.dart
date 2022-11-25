@@ -24,33 +24,39 @@ part 'router_notifier.g.dart';
 @riverpod
 class RouterNotifier extends _$RouterNotifier implements Listenable {
   VoidCallback? routerListener;
-  bool? isAuth;
 
   @override
-  Future<void> build() async {
-    isAuth = await ref.watch(
+  Future<bool> build() async {
+    // One could watch more providers and write logic accordingly
+
+    final isAuth = await ref.watch(
       authNotifierProvider.selectAsync(
           (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)),
     );
 
-    // TODO One could watch more providers, here, and write logic accordingly
+    ref.listenSelf((_, __) {
+      // One could write more conditional logic for when to call redirection
+      routerListener?.call();
+    });
 
-    routerListener?.call();
+    return isAuth;
   }
 
   /// Redirects the user when our authentication changes
   String? redirect(BuildContext context, GoRouterState state) {
+    final isAuth = this.state.valueOrNull;
+
     if (isAuth == null) return null;
     final isSplash = state.location == SplashRoute.path;
 
     if (isSplash) {
-      return isAuth! ? HomeRoute.path : LoginRoute.path;
+      return isAuth ? HomeRoute.path : LoginRoute.path;
     }
 
     final isLoggingIn = state.location == LoginRoute.path;
-    if (isLoggingIn) return isAuth! ? HomeRoute.path : null;
+    if (isLoggingIn) return isAuth ? HomeRoute.path : null;
 
-    return isAuth! ? null : SplashRoute.path;
+    return isAuth ? null : SplashRoute.path;
   }
 
   /// Our application routes. Obtained through code generation
