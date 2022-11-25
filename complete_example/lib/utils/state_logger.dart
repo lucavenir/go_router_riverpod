@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RiverpodLogger extends ProviderObserver {
-  const RiverpodLogger();
+/// Useful to log state change in our application
+/// Read the logs and you'll better understand what's going on under the hood
+class StateLogger extends ProviderObserver {
+  const StateLogger();
   @override
   void didUpdateProvider(
     ProviderBase provider,
