@@ -36,6 +36,7 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
 
     ref.listenSelf((_, __) {
       // One could write more conditional logic for when to call redirection
+      if (state.isLoading) return;
       routerListener?.call();
     });
 
