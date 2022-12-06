@@ -1,16 +1,40 @@
 # code_gen
 
-A new Flutter project.
+This a slightly more complicated example, featuring:
+- Riverpod's new [AsyncNotifier] (Riverpod v2)
+- GoRouter's asynchronous redirect API
+- A slightly more complicated and asynchronous authentication model
+- A basic authentication model
+- An intermediate splash page
+- Some basic persistence API usage
+- **!** several code generation tools, such as `riverpod_annotation`, `go_router_builder` and `freezed`
 
-## Getting Started
+This is the "main" example of this repo; its objective is to define some best practices when using Riverpod + GoRouter (as opposed to other examples, which are just community-driven).
 
-This project is a starting point for a Flutter application.
+**Note**. The tests are _intentionally_ not being updated and the route-level redirect is missing. We're waiting on [this PR](https://github.com/flutter/packages/pull/2848) before completing this example. The rest of the example is fine, tho.
 
-A few resources to get you started if this is your first Flutter project:
+**Nonetheless**:
+  - _This has to be considered as a "best effort" example that aims to integrate as much best practices as possible_;
+  - _Indeed, we can all agree that there is no magical silver bullet that fits in every possible use case: use with caution._.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Dependencies**:
+  - GoRouter v5 (and its annotation)
+  - Riverpod v2 (and its annotation)
+  - Freezed v2
+  - SharedPreferences v2
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Getting started
+
+First, read the code:
+  - 'lib/main.dart' has UI elements
+  - 'lib/router' has the routing logic
+  - 'lib/entities.dart' has domain logic
+
+Most of the actions are mocked, here.
+Then, run:
+
+`flutter pub run build_runner watch -d`
+`flutter test`
+`flutter run`
+
+Enjoy!
