@@ -1,4 +1,4 @@
-package com.example.sync_router
+package com.example.code_gen
 
 import io.flutter.embedding.android.FlutterActivity
 
