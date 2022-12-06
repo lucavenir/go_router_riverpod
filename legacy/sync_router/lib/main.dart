@@ -5,11 +5,11 @@ import 'auth.dart';
 import 'router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: SyncRouterApp()));
+  runApp(const ProviderScope(child: MyAwesomeApp()));
 }
 
-class SyncRouterApp extends ConsumerWidget {
-  const SyncRouterApp({super.key});
+class MyAwesomeApp extends ConsumerWidget {
+  const MyAwesomeApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,16 +83,5 @@ class LoginPage extends ConsumerWidget {
         ),
       ),
     );
-  }
-}
-
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
-  static String get routeName => 'splash';
-  static String get routeLocation => '/$routeName';
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

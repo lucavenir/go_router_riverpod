@@ -5,7 +5,8 @@ import 'package:sync_router/main.dart';
 void main() {
   testWidgets('The login / logout flow works', (tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const ProviderScope(child: SyncRouterApp()));
+    await tester.pumpWidget(const ProviderScope(child: MyAwesomeApp()));
+    await tester.pump(const Duration(milliseconds: 750));
 
     // The initial location for our router is `/`,
     // but the redirect is immediately triggered

@@ -1,33 +1,28 @@
 # sync_router
 
-This example uses **synchronous redirects** while exploiting a `ChangeNotifier` as a `Listenable` object inside our Router definition.
-**Dependencies**:
-  - GoRouter v5
-  - Riverpod v2
+## Special thanks
+**BIG THANKS** to @creativecreatorormaybenot for introducing this clever, yet simple way of handling GoRouter with Riverpod.
 
-## Is this approach advised?
-This example just works. It has its downside (see below), but it correctly exploits GoRouter's API, while still maintaining Riverpod's advantages.
+This example should be considered the go-to solution if we want to exploit Riverpod _and_ Flutter simplicities!
 
-**Advantages:**
-  - `RouterNotifier` centralizes all the logic, which can be highly customizable
-  - `ref.listen` allows to scale reactive dependencies linearly
-  - No side effects
+This example works with no side effects, no `ChangeNotifier`, no weird `ref` piping; we just write handle our router declaratively, with a few LOC. Reactive dependencies are directly written in the Router's Provider, while no unnecessary rebuilds are being performed.
 
-**Disadvantages:**
-  - `ChangeNotifier` is discouraged within Riverpod (see https://riverpod.dev/docs/concepts/providers/#different-types-of-providers), but it's the closest class we have at our disposal that implements the `Listenable` interface (as required by `GoRouter`'s `refreshListenable` parameter);
-  - A `ref` object _must_ be piped down to `ChangeNotifier`: this might be undesirable, as this causes a small caveat (see below)
+### The main trick
+All of our legacy exmples included workarounds to avoid unnecessary rebuilds at the top of our Widget Tree (where the router lies). The simple trick here is to use a `GlobalKey` on top of our router: this tells the Framework not to rebuild the whole widget tree.
 
-### Short explanation
-In this example we directly implement a `ChangeNotifier`. In its constructor method, we exploit `ref.listen` to add reactive dependencies through `notifyListeners`.
+At the same time, our router is rebuilt, with no side effects or special caring about `ref`s usage. This enables the developer to just write - declaratively - all the dependencies needed _directly in the Provider_, i.e. to use Riverpod how it is supposed to be used.
 
-**Caveat**
-Reactive dependencies must be defined _only_ within the constructor and _only_ through `ref.listen`.
+### Is this approach advised?
+Absolutely; at this very moment I can't find any downsides to this approach. But if you find any, you're welcome to open issues or PR.
 
-This is key to avoid unnecessary rebuilds: when writing logic inside our Notifier, we might want to use `ref.read` to read providers, _and avoid `ref.watch`_.
+Always consider that the examples in this repo are tested (use `flutter test` for a quick check).
 
-GoRouter is already aware of state changes through `refreshListenable`: we don't want to trigger a rebuild of the surrounding provider.
+### Wait a minute, I do see unnecessary rebuilds
+Are you _absolutely sure_? Before we raise red flags onto this example, consider that this `routerProvider` does trigger rebuilds on `MyAwesomeApp`, but because of the `GlobalKey<NavigatorState>()` we've set onto our router, Flutter won't trigger a rebuild _on the whole Widget tree_.
 
-_Simply put - this is not clean code - this works because of side effects._
+Please read [this discussion](https://github.com/flutter/flutter/issues/112915#issuecomment-1269053217) for a detailed explanation.
+
+If you're still convinced this approach doesn't work out, and you want to share your thoughts, you're very welcome to open an issue or a PR.
 
 ## Getting started
 
