@@ -3,10 +3,8 @@
 This a slightly more complicated example, featuring:
 - Riverpod's new [AsyncNotifier] (Riverpod v2)
 - GoRouter's asynchronous redirect API
-- Riverpod Annotation code generation tool
-- GoRouterBuilder code generation tool
 - A slightly more complicated and asynchronous authentication model
-- A basic authorization model
+- A basic authentication model
 - An intermediate splash page
 - Some basic persistence API usage
 
@@ -21,8 +19,6 @@ This is the "main" example of this repo; its objective is to define some best pr
 **Dependencies**:
   - GoRouter v5
   - Riverpod v2
-  - GoRouterBuilder v1
-  - RiverpodAnnotation v1
   - SharedPreferences v2
 
 ## Getting started
@@ -35,7 +31,6 @@ First, read the code:
 Most of the actions are mocked, here.
 Then, run:
 
-`flutter pub run build_runner watch -d`
 `flutter test`
 `flutter run`
 

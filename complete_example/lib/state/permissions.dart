@@ -5,25 +5,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../entities/user_role.dart';
 
-part 'permissions.g.dart';
-
 /// If our user is signed out, this provider returns [UserRole.none]
 /// Otherwise, it mocks a network request and gives out some [UserRole].
-@riverpod
-Future<UserRole> permissions(PermissionsRef ref) async {
-  final userId = await ref.watch(
-    authNotifierProvider.selectAsync(
-      (value) => value.map(
-        signedIn: (signedIn) => signedIn.id,
-        signedOut: (signedOut) => null,
-      ),
-    ),
-  );
+final permissionsProvider = FutureProvider.autoDispose<UserRole>((ref) async {
+  final userId = await ref.watch(authNotifierProvider.future);
 
   if (userId == null) return const UserRole.none();
 
   return _requestMock();
-}
+});
 
 /// Gives a random [UserRole] based on a dice roll.
 UserRole _requestMock() {

@@ -6,10 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../entities/user.dart';
 
-part 'auth.g.dart';
-
 /// A mock of an Authenticated User
-const _dummyUser = User.signedIn(
+const _dummyUser = User(
   id: 0,
   displayName: "My Name",
   email: "My Email",
@@ -17,8 +15,7 @@ const _dummyUser = User.signedIn(
 );
 
 /// This notifier holds and handles the authentication state of the application
-@riverpod
-class AuthNotifier extends _$AuthNotifier {
+class AuthNotifier extends AutoDisposeAsyncNotifier<User?> {
   late SharedPreferences sharedPreferences;
   static const _sharedPrefsKey = 'token';
 
@@ -26,7 +23,7 @@ class AuthNotifier extends _$AuthNotifier {
   final _networkRoundTripTime = Random().nextInt(750);
 
   @override
-  FutureOr<User> build() async {
+  FutureOr<User?> build() async {
     sharedPreferences = await SharedPreferences.getInstance();
 
     _persistenceRefreshLogic();
@@ -36,7 +33,7 @@ class AuthNotifier extends _$AuthNotifier {
 
   /// Tries to perform a login with the saved token on the persistant storage.
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
-  Future<User> _loginRecoveryAttempt() async {
+  Future<User?> _loginRecoveryAttempt() async {
     try {
       final savedToken = sharedPreferences.getString(_sharedPrefsKey);
       if (savedToken == null) {
@@ -47,14 +44,14 @@ class AuthNotifier extends _$AuthNotifier {
       return await _loginWithToken(savedToken);
     } catch (_, __) {
       await sharedPreferences.remove(_sharedPrefsKey);
-      return const User.signedOut();
+      return null;
     }
   }
 
   /// Mock of a request performed on logout (might be common, or not, whatevs).
   Future<void> logout() async {
     await Future.delayed(Duration(milliseconds: _networkRoundTripTime));
-    state = const AsyncValue<User>.data(User.signedOut());
+    state = const AsyncValue.data(null);
   }
 
   /// Mock of a successful login attempt, which results come from the network.
@@ -93,18 +90,19 @@ class AuthNotifier extends _$AuthNotifier {
       }
 
       final val = next.requireValue;
+      final isAuthenticated = val == null;
 
-      val.map<void>(
-        signedIn: (signedIn) {
-          sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
-        },
-        signedOut: (signedOut) {
-          sharedPreferences.remove(_sharedPrefsKey);
-        },
-      );
+      isAuthenticated
+          ? sharedPreferences.remove(_sharedPrefsKey)
+          : sharedPreferences.setString(_sharedPrefsKey, val.token);
     });
   }
 }
+
+final authNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<AuthNotifier, User?>(() {
+  return AuthNotifier();
+});
 
 /// Simple mock of a 401 exception
 class UnauthorizedException implements Exception {

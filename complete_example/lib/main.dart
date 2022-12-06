@@ -30,6 +30,7 @@ class MyAwesomeApp extends ConsumerWidget {
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
+  static const path = '/home';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,6 +57,7 @@ class HomePage extends ConsumerWidget {
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
+  static const path = '/splash';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,6 +87,7 @@ class LoginPage extends ConsumerWidget {
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
+  static const path = '/splash';
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +99,7 @@ class SplashPage extends StatelessWidget {
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
+  static const path = '/splash';
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +111,7 @@ class AdminPage extends StatelessWidget {
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
+  static const path = '/splash';
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +123,7 @@ class UserPage extends StatelessWidget {
 
 class GuestPage extends StatelessWidget {
   const GuestPage({super.key});
+  static const path = '/splash';
 
   @override
   Widget build(BuildContext context) {

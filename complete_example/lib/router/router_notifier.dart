@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../main.dart';
 import '../state/auth.dart';
-import 'routes.dart';
-
-part 'router_notifier.g.dart';
 
 /// This notifier exposes nothing (void) but implements [Listenable].
 /// This notifier is meant to just access its internal [Notifier].
@@ -21,8 +19,8 @@ part 'router_notifier.g.dart';
 ///      every time something changes
 ///   3. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
 ///   4. It allows for listening to multiple providers if needed
-@riverpod
-class RouterNotifier extends _$RouterNotifier implements Listenable {
+class RouterNotifier extends AutoDisposeAsyncNotifier<bool>
+    implements Listenable {
   VoidCallback? routerListener;
 
   @override
@@ -30,8 +28,7 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
     // One could watch more providers and write logic accordingly
 
     final isAuth = await ref.watch(
-      authNotifierProvider.selectAsync(
-          (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)),
+      authNotifierProvider.selectAsync((data) => data != null),
     );
 
     ref.listenSelf((_, __) {
@@ -48,20 +45,46 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
     final isAuth = this.state.valueOrNull;
 
     if (isAuth == null) return null;
-    final isSplash = state.location == SplashRoute.path;
+    final isSplash = state.location == SplashPage.path;
 
     if (isSplash) {
-      return isAuth ? HomeRoute.path : LoginRoute.path;
+      return isAuth ? HomePage.path : LoginPage.path;
     }
 
-    final isLoggingIn = state.location == LoginRoute.path;
-    if (isLoggingIn) return isAuth ? HomeRoute.path : null;
+    final isLoggingIn = state.location == LoginPage.path;
+    if (isLoggingIn) return isAuth ? HomePage.path : null;
 
-    return isAuth ? null : SplashRoute.path;
+    return isAuth ? null : SplashPage.path;
   }
 
   /// Our application routes. Obtained through code generation
-  List<GoRoute> get routes => $appRoutes;
+  List<GoRoute> get routes => [
+        GoRoute(
+          path: SplashPage.path,
+          builder: (context, state) => const SplashPage(),
+        ),
+        GoRoute(
+            path: HomePage.path,
+            builder: (context, state) => const HomePage(),
+            routes: [
+              GoRoute(
+                path: AdminPage.path,
+                builder: (context, state) => const AdminPage(),
+              ),
+              GoRoute(
+                path: UserPage.path,
+                builder: (context, state) => const UserPage(),
+              ),
+              GoRoute(
+                path: GuestPage.path,
+                builder: (context, state) => const GuestPage(),
+              )
+            ]),
+        GoRoute(
+          path: LoginPage.path,
+          builder: (context, state) => const LoginPage(),
+        ),
+      ];
 
   /// Adds [GoRouter]'s listener as specified by its [Listenable].
   /// [GoRouteInformationProvider] uses this method on creation to handle its
@@ -83,3 +106,8 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
     routerListener = null;
   }
 }
+
+final routerNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<RouterNotifier, bool>(() {
+  return RouterNotifier();
+});
