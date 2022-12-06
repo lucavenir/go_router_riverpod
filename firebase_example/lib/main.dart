@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'auth.dart';
 import 'firebase_options.dart';
 import 'router.dart';
 
@@ -39,6 +40,10 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final name = ref.watch(authProvider.select(
+      (value) => value.valueOrNull?.displayName,
+    ));
+
     return Scaffold(
       appBar: AppBar(title: const Text("Your phenomenal app")),
       body: Center(
@@ -46,7 +51,7 @@ class HomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text("Home Page"),
+            Text("Wellcome, $name. This is your homepage."),
             ElevatedButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
