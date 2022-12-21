@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_role.dart';
 
@@ -19,8 +19,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
+    required TResult Function() user,
     required TResult Function() guest,
     required TResult Function() none,
   }) =>
@@ -28,8 +27,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
+    TResult? Function()? user,
     TResult? Function()? guest,
     TResult? Function()? none,
   }) =>
@@ -37,8 +35,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
+    TResult Function()? user,
     TResult Function()? guest,
     TResult Function()? none,
     required TResult orElse(),
@@ -47,8 +44,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
+    required TResult Function(User value) user,
     required TResult Function(Guest value) guest,
     required TResult Function(None value) none,
   }) =>
@@ -56,8 +52,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
+    TResult? Function(User value)? user,
     TResult? Function(Guest value)? guest,
     TResult? Function(None value)? none,
   }) =>
@@ -65,8 +60,7 @@ mixin _$UserRole {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
+    TResult Function(User value)? user,
     TResult Function(Guest value)? guest,
     TResult Function(None value)? none,
     required TResult orElse(),
@@ -127,8 +121,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
+    required TResult Function() user,
     required TResult Function() guest,
     required TResult Function() none,
   }) {
@@ -139,8 +132,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
+    TResult? Function()? user,
     TResult? Function()? guest,
     TResult? Function()? none,
   }) {
@@ -151,8 +143,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
+    TResult Function()? user,
     TResult Function()? guest,
     TResult Function()? none,
     required TResult orElse(),
@@ -167,8 +158,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
+    required TResult Function(User value) user,
     required TResult Function(Guest value) guest,
     required TResult Function(None value) none,
   }) {
@@ -179,8 +169,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
+    TResult? Function(User value)? user,
     TResult? Function(Guest value)? guest,
     TResult? Function(None value)? none,
   }) {
@@ -191,8 +180,7 @@ class _$Admin implements Admin {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
+    TResult Function(User value)? user,
     TResult Function(Guest value)? guest,
     TResult Function(None value)? none,
     required TResult orElse(),
@@ -209,35 +197,32 @@ abstract class Admin implements UserRole {
 }
 
 /// @nodoc
-abstract class _$$VerifiedUserCopyWith<$Res> {
-  factory _$$VerifiedUserCopyWith(
-          _$VerifiedUser value, $Res Function(_$VerifiedUser) then) =
-      __$$VerifiedUserCopyWithImpl<$Res>;
+abstract class _$$UserCopyWith<$Res> {
+  factory _$$UserCopyWith(_$User value, $Res Function(_$User) then) =
+      __$$UserCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$VerifiedUserCopyWithImpl<$Res>
-    extends _$UserRoleCopyWithImpl<$Res, _$VerifiedUser>
-    implements _$$VerifiedUserCopyWith<$Res> {
-  __$$VerifiedUserCopyWithImpl(
-      _$VerifiedUser _value, $Res Function(_$VerifiedUser) _then)
+class __$$UserCopyWithImpl<$Res> extends _$UserRoleCopyWithImpl<$Res, _$User>
+    implements _$$UserCopyWith<$Res> {
+  __$$UserCopyWithImpl(_$User _value, $Res Function(_$User) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$VerifiedUser implements VerifiedUser {
-  const _$VerifiedUser();
+class _$User implements User {
+  const _$User();
 
   @override
   String toString() {
-    return 'UserRole.verifiedUser()';
+    return 'UserRole.user()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$VerifiedUser);
+        (other.runtimeType == runtimeType && other is _$User);
   }
 
   @override
@@ -247,38 +232,35 @@ class _$VerifiedUser implements VerifiedUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
+    required TResult Function() user,
     required TResult Function() guest,
     required TResult Function() none,
   }) {
-    return verifiedUser();
+    return user();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
+    TResult? Function()? user,
     TResult? Function()? guest,
     TResult? Function()? none,
   }) {
-    return verifiedUser?.call();
+    return user?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
+    TResult Function()? user,
     TResult Function()? guest,
     TResult Function()? none,
     required TResult orElse(),
   }) {
-    if (verifiedUser != null) {
-      return verifiedUser();
+    if (user != null) {
+      return user();
     }
     return orElse();
   }
@@ -287,165 +269,42 @@ class _$VerifiedUser implements VerifiedUser {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
+    required TResult Function(User value) user,
     required TResult Function(Guest value) guest,
     required TResult Function(None value) none,
   }) {
-    return verifiedUser(this);
+    return user(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
+    TResult? Function(User value)? user,
     TResult? Function(Guest value)? guest,
     TResult? Function(None value)? none,
   }) {
-    return verifiedUser?.call(this);
+    return user?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
+    TResult Function(User value)? user,
     TResult Function(Guest value)? guest,
     TResult Function(None value)? none,
     required TResult orElse(),
   }) {
-    if (verifiedUser != null) {
-      return verifiedUser(this);
+    if (user != null) {
+      return user(this);
     }
     return orElse();
   }
 }
 
-abstract class VerifiedUser implements UserRole {
-  const factory VerifiedUser() = _$VerifiedUser;
-}
-
-/// @nodoc
-abstract class _$$UnverifiedUserCopyWith<$Res> {
-  factory _$$UnverifiedUserCopyWith(
-          _$UnverifiedUser value, $Res Function(_$UnverifiedUser) then) =
-      __$$UnverifiedUserCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UnverifiedUserCopyWithImpl<$Res>
-    extends _$UserRoleCopyWithImpl<$Res, _$UnverifiedUser>
-    implements _$$UnverifiedUserCopyWith<$Res> {
-  __$$UnverifiedUserCopyWithImpl(
-      _$UnverifiedUser _value, $Res Function(_$UnverifiedUser) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$UnverifiedUser implements UnverifiedUser {
-  const _$UnverifiedUser();
-
-  @override
-  String toString() {
-    return 'UserRole.unverifiedUser()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UnverifiedUser);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
-    required TResult Function() guest,
-    required TResult Function() none,
-  }) {
-    return unverifiedUser();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
-    TResult? Function()? guest,
-    TResult? Function()? none,
-  }) {
-    return unverifiedUser?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
-    TResult Function()? guest,
-    TResult Function()? none,
-    required TResult orElse(),
-  }) {
-    if (unverifiedUser != null) {
-      return unverifiedUser();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
-    required TResult Function(Guest value) guest,
-    required TResult Function(None value) none,
-  }) {
-    return unverifiedUser(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
-    TResult? Function(Guest value)? guest,
-    TResult? Function(None value)? none,
-  }) {
-    return unverifiedUser?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
-    TResult Function(Guest value)? guest,
-    TResult Function(None value)? none,
-    required TResult orElse(),
-  }) {
-    if (unverifiedUser != null) {
-      return unverifiedUser(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class UnverifiedUser implements UserRole {
-  const factory UnverifiedUser() = _$UnverifiedUser;
+abstract class User implements UserRole {
+  const factory User() = _$User;
 }
 
 /// @nodoc
@@ -484,8 +343,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
+    required TResult Function() user,
     required TResult Function() guest,
     required TResult Function() none,
   }) {
@@ -496,8 +354,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
+    TResult? Function()? user,
     TResult? Function()? guest,
     TResult? Function()? none,
   }) {
@@ -508,8 +365,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
+    TResult Function()? user,
     TResult Function()? guest,
     TResult Function()? none,
     required TResult orElse(),
@@ -524,8 +380,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
+    required TResult Function(User value) user,
     required TResult Function(Guest value) guest,
     required TResult Function(None value) none,
   }) {
@@ -536,8 +391,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
+    TResult? Function(User value)? user,
     TResult? Function(Guest value)? guest,
     TResult? Function(None value)? none,
   }) {
@@ -548,8 +402,7 @@ class _$Guest implements Guest {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
+    TResult Function(User value)? user,
     TResult Function(Guest value)? guest,
     TResult Function(None value)? none,
     required TResult orElse(),
@@ -601,8 +454,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() admin,
-    required TResult Function() verifiedUser,
-    required TResult Function() unverifiedUser,
+    required TResult Function() user,
     required TResult Function() guest,
     required TResult Function() none,
   }) {
@@ -613,8 +465,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? admin,
-    TResult? Function()? verifiedUser,
-    TResult? Function()? unverifiedUser,
+    TResult? Function()? user,
     TResult? Function()? guest,
     TResult? Function()? none,
   }) {
@@ -625,8 +476,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? admin,
-    TResult Function()? verifiedUser,
-    TResult Function()? unverifiedUser,
+    TResult Function()? user,
     TResult Function()? guest,
     TResult Function()? none,
     required TResult orElse(),
@@ -641,8 +491,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Admin value) admin,
-    required TResult Function(VerifiedUser value) verifiedUser,
-    required TResult Function(UnverifiedUser value) unverifiedUser,
+    required TResult Function(User value) user,
     required TResult Function(Guest value) guest,
     required TResult Function(None value) none,
   }) {
@@ -653,8 +502,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Admin value)? admin,
-    TResult? Function(VerifiedUser value)? verifiedUser,
-    TResult? Function(UnverifiedUser value)? unverifiedUser,
+    TResult? Function(User value)? user,
     TResult? Function(Guest value)? guest,
     TResult? Function(None value)? none,
   }) {
@@ -665,8 +513,7 @@ class _$None implements None {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Admin value)? admin,
-    TResult Function(VerifiedUser value)? verifiedUser,
-    TResult Function(UnverifiedUser value)? unverifiedUser,
+    TResult Function(User value)? user,
     TResult Function(Guest value)? guest,
     TResult Function(None value)? none,
     required TResult orElse(),

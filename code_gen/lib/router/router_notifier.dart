@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../state/auth.dart';
+import '../state/permissions.dart';
 import 'routes.dart';
 
 part 'router_notifier.g.dart';
@@ -33,6 +34,8 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
       authNotifierProvider.selectAsync(
           (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)),
     );
+    final sub = ref.listen(permissionsProvider, (_, __) {});
+    ref.onDispose(sub.close);
 
     ref.listenSelf((_, __) {
       // One could write more conditional logic for when to call redirection

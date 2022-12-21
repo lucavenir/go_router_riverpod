@@ -33,9 +33,7 @@ UserRole _requestMock() {
   if (random < 0.25) {
     return const UserRole.admin();
   } else if (random < 0.5) {
-    return const UserRole.verifiedUser();
-  } else if (random < 0.75) {
-    return const UserRole.unverifiedUser();
+    return const UserRole.user();
   } else {
     return const UserRole.guest();
   }

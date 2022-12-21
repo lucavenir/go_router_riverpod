@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:code_gen/state/permissions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../main.dart';
@@ -13,7 +15,7 @@ class SplashRoute extends GoRouteData {
   static const path = '/splash';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const SplashPage();
   }
 }
@@ -27,20 +29,38 @@ class HomeRoute extends GoRouteData {
   const HomeRoute();
   static const path = '/home';
 
-  FutureOr<String?> redirect() {
-    // This route should be responsible for redirecting through the correct pages
-    // But we can't access `context` nor `GoRouteState`.
-    // This is because GoRouterBuilder is still "kinda" new.
-    // Please upvote this issue https://github.com/flutter/flutter/issues/115955
-    // And track this PR https://github.com/flutter/packages/pull/2848
-    // And then, wait for GoRouter 5.3.0
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) async {
+    if (state.location == HomeRoute.path) return null;
 
-    // TODO implement route-level redirection logic based on user permissions
-    return null;
+    final asyncRole =
+        ProviderScope.containerOf(context).read(permissionsProvider);
+
+    final userRole = asyncRole.valueOrNull;
+    if (userRole == null) return HomeRoute.path;
+
+    return userRole.map(
+      admin: (_) => null,
+      user: (_) {
+        if (state.location == AdminRoute.path) return HomeRoute.path;
+        return null;
+      },
+      guest: (_) {
+        if (state.location == AdminRoute.path ||
+            state.location == UserRoute.path) {
+          return HomeRoute.path;
+        }
+        return null;
+      },
+      none: (_) {
+        if (state.location != HomeRoute.path) return HomeRoute.path;
+        return null;
+      },
+    );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const HomePage();
   }
 }
@@ -51,7 +71,7 @@ class LoginRoute extends GoRouteData {
   static const path = '/login';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const LoginPage();
   }
 }
@@ -61,7 +81,7 @@ class AdminRoute extends GoRouteData {
   static const path = 'admin';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const AdminPage();
   }
 }
@@ -71,7 +91,7 @@ class UserRoute extends GoRouteData {
   static const path = 'user';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const UserPage();
   }
 }
@@ -81,7 +101,7 @@ class GuestRoute extends GoRouteData {
   static const path = 'guest';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const GuestPage();
   }
 }

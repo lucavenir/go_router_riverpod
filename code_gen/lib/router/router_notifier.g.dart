@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $RouterNotifierHash() => r'99fa1149f193c70e0a01876156d73c136c7e82d1';
+String $RouterNotifierHash() => r'73e34a3778f65c4afb89e76bf3fa062d4f162c37';
 
 /// This notifier exposes nothing (void) but implements [Listenable].
 /// This notifier is meant to just access its internal [Notifier].
