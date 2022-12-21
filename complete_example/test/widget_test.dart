@@ -12,6 +12,7 @@ void main() {
     expect(find.text('Splash Page'), findsOneWidget);
 
     await tester.pumpAndSettle();
+
     expect(find.text('Home Page'), findsNothing);
     expect(find.text('Splash Page'), findsNothing);
     expect(find.text('Login Page'), findsOneWidget);
@@ -26,7 +27,7 @@ void main() {
     expect(find.text('Home Page'), findsOneWidget);
 
     await tester.tap(find.bySemanticsLabel('Logout'));
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(milliseconds: 750));
 
     expect(find.text('Splash Page'), findsNothing);
     expect(find.text('Home Page'), findsNothing);
