@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $AuthNotifierHash() => r'587998753a879e6c3f8912f3913c0e2ea5eb1b14';
+String $AuthNotifierHash() => r'9897db452b43403755ac7852256c19e5aa363c91';
 
 /// This notifier holds and handles the authentication state of the application
 ///

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +19,6 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<User?> {
   static const _sharedPrefsKey = 'token';
 
   /// Mock of the duration of a network request
-  final _networkRoundTripTime = Random().nextInt(750);
 
   @override
   FutureOr<User?> build() async {
@@ -50,7 +48,7 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<User?> {
 
   /// Mock of a request performed on logout (might be common, or not, whatevs).
   Future<void> logout() async {
-    await Future.delayed(Duration(milliseconds: _networkRoundTripTime));
+    await Future.delayed(networkRoundTripTime);
     state = const AsyncValue.data(null);
   }
 
@@ -58,7 +56,7 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<User?> {
   Future<void> login(String email, String password) async {
     state = await AsyncValue.guard<User>(() async {
       return Future.delayed(
-        Duration(milliseconds: _networkRoundTripTime),
+        networkRoundTripTime,
         () => _dummyUser,
       );
     });
@@ -68,7 +66,7 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<User?> {
   /// If such request fails, this method will throw an [UnauthorizedException].
   Future<User> _loginWithToken(String token) async {
     final logInAttempt = await Future.delayed(
-      Duration(milliseconds: _networkRoundTripTime),
+      networkRoundTripTime,
       () => true,
     );
 
@@ -109,3 +107,6 @@ class UnauthorizedException implements Exception {
   final String message;
   const UnauthorizedException(this.message);
 }
+
+/// Mock of the duration of a network request
+const networkRoundTripTime = Duration(milliseconds: 750);

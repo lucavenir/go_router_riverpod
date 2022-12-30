@@ -3,54 +3,48 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../state/auth.dart';
-import '../state/permissions.dart';
 import 'routes.dart';
 
 part 'router_notifier.g.dart';
 
-/// This notifier exposes nothing (void) but implements [Listenable].
-/// This notifier is meant to just access its internal [Notifier].
+/// This notifier is meant to implement the [Listenable] our [GoRouter] needs.
 ///
-/// This notifier triggers our router's listener everytime is needed.
-/// In this simple case, we do so when `auth` changes.
+/// We aim to trigger redirects whenever's needed.
+/// This is done by calling our (only) listener everytime we want to notify stuff.
+/// This allows to centralize global redirecting logic in this class.
+/// In this simple case, we just listen to auth changes.
 ///
 /// SIDE NOTE.
 /// This might look overcomplicated at a first glance;
 /// Instead, this method aims to follow some good some good practices:
 ///   1. It doesn't require us to pipe down any `ref` parameter
-///   2. Since it's not meant to be _watched_, it uselessly rebuild a [GoRouter]
-///      every time something changes
-///   3. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
-///   4. It allows for listening to multiple providers if needed
+///   2. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
+///   3. It allows for listening to multiple providers if needed (we do have a [Ref] now!)
 @riverpod
 class RouterNotifier extends _$RouterNotifier implements Listenable {
   VoidCallback? routerListener;
+  bool isAuth = false; // Useful for our global redirect functio
 
   @override
-  Future<bool> build() async {
+  Future<void> build() async {
     // One could watch more providers and write logic accordingly
 
-    final isAuth = await ref.watch(
+    isAuth = await ref.watch(
       authNotifierProvider.selectAsync(
           (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)),
     );
-    final sub = ref.listen(permissionsProvider, (_, __) {});
-    ref.onDispose(sub.close);
 
     ref.listenSelf((_, __) {
       // One could write more conditional logic for when to call redirection
       if (state.isLoading) return;
       routerListener?.call();
     });
-
-    return isAuth;
   }
 
   /// Redirects the user when our authentication changes
   String? redirect(BuildContext context, GoRouterState state) {
-    final isAuth = this.state.valueOrNull;
+    if (this.state.isLoading || this.state.hasError) return null;
 
-    if (isAuth == null) return null;
     final isSplash = state.location == SplashRoute.path;
 
     if (isSplash) {

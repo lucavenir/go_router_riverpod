@@ -29,9 +29,9 @@ class _SystemHash {
   }
 }
 
-String $RouterNotifierHash() => r'73e34a3778f65c4afb89e76bf3fa062d4f162c37';
+String $RouterNotifierHash() => r'a9feeaa6e72de8efd1eb240ef3409454f05ee1fc';
 
-/// This notifier exposes nothing (void) but implements [Listenable].
+/// This notifier could expose nothing (`void`): we just care about implementing [Listenable].
 /// This notifier is meant to just access its internal [Notifier].
 ///
 /// This notifier triggers our router's listener everytime is needed.
@@ -41,23 +41,21 @@ String $RouterNotifierHash() => r'73e34a3778f65c4afb89e76bf3fa062d4f162c37';
 /// This might look overcomplicated at a first glance;
 /// Instead, this method aims to follow some good some good practices:
 ///   1. It doesn't require us to pipe down any `ref` parameter
-///   2. Since it's not meant to be _watched_, it uselessly rebuild a [GoRouter]
-///      every time something changes
-///   3. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
-///   4. It allows for listening to multiple providers if needed
+///   2. It works as a complete replacement for [ChangeNotifier] (it's a [Listenable] implementation)
+///   3. It allows for listening to multiple providers if needed (we have a [Ref] now!)
 ///
 /// Copied from [RouterNotifier].
 final routerNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<RouterNotifier, bool>(
+    AutoDisposeAsyncNotifierProvider<RouterNotifier, void>(
   RouterNotifier.new,
   name: r'routerNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $RouterNotifierHash,
 );
-typedef RouterNotifierRef = AutoDisposeAsyncNotifierProviderRef<bool>;
+typedef RouterNotifierRef = AutoDisposeAsyncNotifierProviderRef<void>;
 
-abstract class _$RouterNotifier extends AutoDisposeAsyncNotifier<bool> {
+abstract class _$RouterNotifier extends AutoDisposeAsyncNotifier<void> {
   @override
-  FutureOr<bool> build();
+  FutureOr<void> build();
 }

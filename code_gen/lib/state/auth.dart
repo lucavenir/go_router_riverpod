@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,16 +21,13 @@ class AuthNotifier extends _$AuthNotifier {
   late SharedPreferences sharedPreferences;
   static const _sharedPrefsKey = 'token';
 
-  /// Mock of the duration of a network request
-  final _networkRoundTripTime = Random().nextInt(750);
-
   @override
-  FutureOr<User> build() async {
+  Future<User> build() async {
     sharedPreferences = await SharedPreferences.getInstance();
 
     _persistenceRefreshLogic();
 
-    return await _loginRecoveryAttempt();
+    return _loginRecoveryAttempt();
   }
 
   /// Tries to perform a login with the saved token on the persistant storage.
@@ -54,7 +50,7 @@ class AuthNotifier extends _$AuthNotifier {
 
   /// Mock of a request performed on logout (might be common, or not, whatevs).
   Future<void> logout() async {
-    await Future.delayed(Duration(milliseconds: _networkRoundTripTime));
+    await Future.delayed(networkRoundTripTime);
     state = const AsyncValue<User>.data(User.signedOut());
   }
 
@@ -62,7 +58,7 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> login(String email, String password) async {
     state = await AsyncValue.guard<User>(() async {
       return Future.delayed(
-        Duration(milliseconds: _networkRoundTripTime),
+        networkRoundTripTime,
         () => _dummyUser,
       );
     });
@@ -72,7 +68,7 @@ class AuthNotifier extends _$AuthNotifier {
   /// If such request fails, this method will throw an [UnauthorizedException].
   Future<User> _loginWithToken(String token) async {
     final logInAttempt = await Future.delayed(
-      Duration(milliseconds: _networkRoundTripTime),
+      networkRoundTripTime,
       () => true,
     );
 
@@ -112,3 +108,6 @@ class UnauthorizedException implements Exception {
   final String message;
   const UnauthorizedException(this.message);
 }
+
+/// Mock of the duration of a network request
+const networkRoundTripTime = Duration(milliseconds: 750);
