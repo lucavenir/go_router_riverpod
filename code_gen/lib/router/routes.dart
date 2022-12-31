@@ -33,30 +33,26 @@ class HomeRoute extends GoRouteData {
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) async {
     if (state.location == HomeRoute.path) return null;
 
-    final asyncRole =
-        ProviderScope.containerOf(context).read(permissionsProvider);
+    final roleListener = ProviderScope.containerOf(context).listen(
+      permissionsProvider.select((value) => value.valueOrNull),
+      (previous, next) {},
+    );
 
-    final userRole = asyncRole.valueOrNull;
-    if (userRole == null) return HomeRoute.path;
-
-    return userRole.map(
+    final userRole = roleListener.read();
+    final redirectTo = userRole?.maybeMap(
       admin: (_) => null,
       user: (_) {
         if (state.location == AdminRoute.path) return HomeRoute.path;
         return null;
       },
-      guest: (_) {
-        if (state.location == AdminRoute.path ||
-            state.location == UserRoute.path) {
-          return HomeRoute.path;
-        }
-        return null;
-      },
-      none: (_) {
+      orElse: () {
         if (state.location != HomeRoute.path) return HomeRoute.path;
         return null;
       },
     );
+
+    roleListener.close();
+    return redirectTo;
   }
 
   @override

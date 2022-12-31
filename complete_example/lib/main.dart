@@ -44,7 +44,7 @@ class HomePage extends ConsumerWidget {
             const Text("Home Page"),
             ElevatedButton(
               onPressed: () {
-                ref.read(authNotifierProvider.notifier).logout();
+                ref.watch(authNotifierProvider.notifier).logout();
               },
               child: const Text("Logout"),
             ),
@@ -71,7 +71,7 @@ class LoginPage extends ConsumerWidget {
             const Text("Login Page"),
             ElevatedButton(
               onPressed: () async {
-                ref.read(authNotifierProvider.notifier).login(
+                ref.watch(authNotifierProvider.notifier).login(
                       "myEmail",
                       "myPassword",
                     );
