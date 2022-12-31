@@ -6,8 +6,10 @@ These examples are community driven and strive to represent the "best" solution 
 Every example in here is a simple mock of a login.
 
 ## Special Thanks
-**BIG THANKS** to @creativecreatorormaybenot for its previous suggestions.
-**BIG THANKS** to @rrousselGit for creating this _great_ ecosystem!
+**BIG THANKS** to...
+- @[anyone] who has ever contributed in here
+- @[the whole riverpod discord community] for the discussions we've enjoyed around this problem
+- @rrousselGit for creating this _great_ ecosystem!
 
 ## Which example should I read or use?
 
