@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../entities/user_role.dart';
 import '../main.dart';
 import '../state/auth.dart';
+import '../state/permissions.dart';
 
 /// This notifier is meant to implement the [Listenable] our [GoRouter] needs.
 ///
@@ -63,6 +66,20 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
         GoRoute(
             path: HomePage.path,
             builder: (context, state) => const HomePage(),
+            redirect: (context, state) async {
+              if (state.location == HomePage.path) return null;
+
+              final roleListener = ProviderScope.containerOf(context).listen(
+                permissionsProvider.select((value) => value.valueOrNull),
+                (previous, next) {},
+              );
+
+              final userRole = roleListener.read();
+              final redirectTo = userRole?.redirectBasedOn(state.location);
+
+              roleListener.close();
+              return redirectTo;
+            },
             routes: [
               GoRoute(
                 path: AdminPage.path,
@@ -108,3 +125,22 @@ final routerNotifierProvider =
     AutoDisposeAsyncNotifierProvider<RouterNotifier, void>(() {
   return RouterNotifier();
 });
+
+/// A simple extension to determine wherever should we redirect our users
+extension RedirecttionBasedOnRole on UserRole {
+  /// Redirects the users based on [this] and its current [location]
+  String? redirectBasedOn(String location) {
+    switch (this) {
+      case UserRole.admin:
+        return null;
+      case UserRole.verifiedUser:
+      case UserRole.unverifiedUser:
+        if (location == AdminPage.path) return HomePage.path;
+        return null;
+      case UserRole.guest:
+      case UserRole.none:
+        if (location != HomePage.path) return HomePage.path;
+        return null;
+    }
+  }
+}
