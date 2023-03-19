@@ -29,30 +29,22 @@ class HomeRoute extends GoRouteData {
   const HomeRoute();
   static const path = '/home';
 
+  /// Important note on this redirect function: this isn't reactive.
+  /// No redirect will be triggered on a user role change.
+  ///
+  /// This is currently unsupported.
   @override
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) async {
-    if (state.location == HomeRoute.path) return null;
-
-    final roleListener = ProviderScope.containerOf(context).listen(
-      permissionsProvider.select((value) => value.valueOrNull),
-      (previous, next) {},
+    final userRole = await ProviderScope.containerOf(context).read(
+      permissionsProvider.future,
     );
 
-    final userRole = roleListener.read();
-    final redirectTo = userRole?.maybeMap(
-      admin: (_) => null,
-      user: (_) {
-        if (state.location == AdminRoute.path) return HomeRoute.path;
-        return null;
-      },
-      orElse: () {
-        if (state.location != HomeRoute.path) return HomeRoute.path;
-        return null;
-      },
+    return userRole.map(
+      admin: (_) => const AdminRoute().location,
+      user: (_) => const UserRoute().location,
+      guest: (_) => const GuestRoute().location,
+      none: (_) => null,
     );
-
-    roleListener.close();
-    return redirectTo;
   }
 
   @override

@@ -24,9 +24,12 @@ extension $SplashRouteExtension on SplashRoute {
         '/splash',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }
 
 GoRoute get $homeRoute => GoRouteData.$route(
@@ -55,9 +58,12 @@ extension $HomeRouteExtension on HomeRoute {
         '/home',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }
 
 extension $AdminRouteExtension on AdminRoute {
@@ -67,9 +73,12 @@ extension $AdminRouteExtension on AdminRoute {
         '/home/admin',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }
 
 extension $UserRouteExtension on UserRoute {
@@ -79,9 +88,12 @@ extension $UserRouteExtension on UserRoute {
         '/home/user',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }
 
 extension $GuestRouteExtension on GuestRoute {
@@ -91,9 +103,12 @@ extension $GuestRouteExtension on GuestRoute {
         '/home/guest',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }
 
 GoRoute get $loginRoute => GoRouteData.$route(
@@ -108,7 +123,10 @@ extension $LoginRouteExtension on LoginRoute {
         '/login',
       );
 
-  void go(BuildContext context) => context.go(location, extra: this);
+  void go(BuildContext context) => context.go(location);
 
-  void push(BuildContext context) => context.push(location, extra: this);
+  void push(BuildContext context) => context.push(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 }

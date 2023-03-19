@@ -45,16 +45,16 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;
 
-    final isSplash = state.location == SplashRoute.path;
+    final isSplash = state.location == const SplashRoute().location;
 
     if (isSplash) {
-      return isAuth ? HomeRoute.path : LoginRoute.path;
+      return isAuth ? const HomeRoute().location : const LoginRoute().location;
     }
 
-    final isLoggingIn = state.location == LoginRoute.path;
-    if (isLoggingIn) return isAuth ? HomeRoute.path : null;
+    final isLoggingIn = state.location == const LoginRoute().location;
+    if (isLoggingIn) return isAuth ? const HomeRoute().location : null;
 
-    return isAuth ? null : SplashRoute.path;
+    return isAuth ? null : const SplashRoute().location;
   }
 
   /// Our application routes. Obtained through code generation
