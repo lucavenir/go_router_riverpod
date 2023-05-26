@@ -10,25 +10,28 @@ import 'utils/state_logger.dart';
 
 void main() {
   runApp(
-    const ProviderScope(observers: [StateLogger()], child: MyAwesomeApp()),
+    const ProviderScope(
+      observers: [StateLogger()],
+      child: MyAwesomeApp(),
+    ),
   );
 }
 
 class MyAwesomeApp extends HookConsumerWidget {
-  const MyAwesomeApp({Key? key}) : super(key: key);
+  const MyAwesomeApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(routerNotifierProvider.notifier);
+    final notifier = ref.watch(routerListenableProvider.notifier);
 
     final key = useRef(GlobalKey<NavigatorState>(debugLabel: 'routerKey'));
     final router = useMemoized(
       () => GoRouter(
         navigatorKey: key.value,
         refreshListenable: notifier,
+        initialLocation: SplashRoute.path,
         debugLogDiagnostics: true,
-        initialLocation: $splashRoute.path,
-        routes: notifier.routes,
+        routes: $appRoutes,
         redirect: notifier.redirect,
       ),
       [notifier],
@@ -50,18 +53,15 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Your phenomenal app")),
+      appBar: AppBar(title: const Text('Your phenomenal app')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text("Home Page"),
+            const Text('Home Page'),
             ElevatedButton(
-              onPressed: () {
-                ref.watch(authNotifierProvider.notifier).logout();
-              },
-              child: const Text("Logout"),
+              onPressed: ref.read(authNotifierProvider.notifier).logout,
+              child: const Text('Logout'),
             ),
           ],
         ),
@@ -76,21 +76,17 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: null,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text("Login Page"),
+            const Text('Login Page'),
             ElevatedButton(
-              onPressed: () async {
-                ref.watch(authNotifierProvider.notifier).login(
-                      "myEmail",
-                      "myPassword",
-                    );
-              },
-              child: const Text("Login"),
+              onPressed: () => ref.read(authNotifierProvider.notifier).login(
+                    'myEmail',
+                    'myPassword',
+                  ),
+              child: const Text('Login'),
             ),
           ],
         ),
@@ -105,7 +101,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Splash Page")),
+      body: Center(child: Text('Splash Page')),
     );
   }
 }
@@ -116,7 +112,7 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Admin Page")),
+      body: Center(child: Text('Admin Page')),
     );
   }
 }
@@ -127,7 +123,7 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("User Page")),
+      body: Center(child: Text('User Page')),
     );
   }
 }
@@ -138,7 +134,7 @@ class GuestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Guest Page")),
+      body: Center(child: Text('Guest Page')),
     );
   }
 }

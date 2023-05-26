@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,21 +10,21 @@ part 'auth.g.dart';
 
 /// A mock of an Authenticated User
 const _dummyUser = User.signedIn(
-  id: 0,
-  displayName: "My Name",
-  email: "My Email",
-  token: "some-updated-secret-auth-token",
+  id: -1,
+  displayName: 'My Name',
+  email: 'My Email',
+  token: 'some-updated-secret-auth-token',
 );
 
 /// This notifier holds and handles the authentication state of the application
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
-  late SharedPreferences sharedPreferences;
+  late SharedPreferences _sharedPreferences;
   static const _sharedPrefsKey = 'token';
 
   @override
   Future<User> build() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    _sharedPreferences = await SharedPreferences.getInstance();
 
     _persistenceRefreshLogic();
 
@@ -34,7 +35,7 @@ class AuthNotifier extends _$AuthNotifier {
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
   Future<User> _loginRecoveryAttempt() async {
     try {
-      final savedToken = sharedPreferences.getString(_sharedPrefsKey);
+      final savedToken = _sharedPreferences.getString(_sharedPrefsKey);
       if (savedToken == null) {
         throw const UnauthorizedException(
           "Couldn't find the authentication token",
@@ -43,14 +44,14 @@ class AuthNotifier extends _$AuthNotifier {
 
       return await _loginWithToken(savedToken);
     } catch (_, __) {
-      await sharedPreferences.remove(_sharedPrefsKey);
+      await _sharedPreferences.remove(_sharedPrefsKey);
       return const User.signedOut();
     }
   }
 
   /// Mock of a request performed on logout (might be common, or not, whatevs).
   Future<void> logout() async {
-    await Future.delayed(networkRoundTripTime);
+    await Future<void>.delayed(networkRoundTripTime);
     state = const AsyncValue<User>.data(User.signedOut());
   }
 
@@ -69,7 +70,7 @@ class AuthNotifier extends _$AuthNotifier {
   Future<User> _loginWithToken(String token) async {
     final logInAttempt = await Future.delayed(
       networkRoundTripTime,
-      () => true,
+      () => true, // edit this if you wanna play around
     );
 
     if (logInAttempt) return _dummyUser;
@@ -85,18 +86,14 @@ class AuthNotifier extends _$AuthNotifier {
     ref.listenSelf((_, next) {
       if (next.isLoading) return;
       if (next.hasError) {
-        sharedPreferences.remove(_sharedPrefsKey);
+        _sharedPreferences.remove(_sharedPrefsKey);
         return;
       }
 
-      final val = next.requireValue;
-
-      val.map<void>(
-        signedIn: (signedIn) {
-          sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
-        },
+      next.requireValue.map<void>(
+        signedIn: (signedIn) => _sharedPreferences.setString(_sharedPrefsKey, signedIn.token),
         signedOut: (signedOut) {
-          sharedPreferences.remove(_sharedPrefsKey);
+          _sharedPreferences.remove(_sharedPrefsKey);
         },
       );
     });
@@ -105,9 +102,9 @@ class AuthNotifier extends _$AuthNotifier {
 
 /// Simple mock of a 401 exception
 class UnauthorizedException implements Exception {
-  final String message;
   const UnauthorizedException(this.message);
+  final String message;
 }
 
 /// Mock of the duration of a network request
-const networkRoundTripTime = Duration(milliseconds: 750);
+final networkRoundTripTime = 750.milliseconds;

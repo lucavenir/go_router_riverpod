@@ -20,11 +20,14 @@ class SplashRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<HomeRoute>(path: HomeRoute.path, routes: [
-  TypedGoRoute<AdminRoute>(path: AdminRoute.path),
-  TypedGoRoute<UserRoute>(path: UserRoute.path),
-  TypedGoRoute<GuestRoute>(path: GuestRoute.path),
-])
+@TypedGoRoute<HomeRoute>(
+  path: HomeRoute.path,
+  routes: [
+    TypedGoRoute<AdminRoute>(path: AdminRoute.path),
+    TypedGoRoute<UserRoute>(path: UserRoute.path),
+    TypedGoRoute<GuestRoute>(path: GuestRoute.path),
+  ],
+)
 class HomeRoute extends GoRouteData {
   const HomeRoute();
   static const path = '/home';
@@ -33,12 +36,10 @@ class HomeRoute extends GoRouteData {
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) async {
     if (state.location == HomeRoute.path) return null;
 
-    final roleListener = ProviderScope.containerOf(context).listen(
+    final userRole = ProviderScope.containerOf(context).read(
       permissionsProvider.select((value) => value.valueOrNull),
-      (previous, next) {},
     );
 
-    final userRole = roleListener.read();
     final redirectTo = userRole?.maybeMap(
       admin: (_) => null,
       user: (_) {
@@ -51,7 +52,6 @@ class HomeRoute extends GoRouteData {
       },
     );
 
-    roleListener.close();
     return redirectTo;
   }
 

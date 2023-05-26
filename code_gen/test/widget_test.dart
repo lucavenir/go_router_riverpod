@@ -33,7 +33,7 @@ void main() {
 
     expect(find.text('Splash Page'), findsNothing);
     expect(find.text('Home Page'), findsNothing);
-    expect(find.text("Login Page"), findsOneWidget);
+    expect(find.text('Login Page'), findsOneWidget);
 
     return;
   });

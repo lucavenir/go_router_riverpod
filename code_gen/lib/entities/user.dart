@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 
 /// Authentication class for this sample application.
-/// It shuold be self-explanatory.
+/// It should be self-explanatory.
 @freezed
 class User with _$User {
   const factory User.signedIn({

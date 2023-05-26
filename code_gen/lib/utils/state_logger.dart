@@ -1,3 +1,5 @@
+// ignore_for_file: strict_raw_type
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// Useful to log state change in our application
@@ -11,7 +13,6 @@ class StateLogger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    // TODO use a proper logger
     print('''
 {
   provider: ${provider.name ?? provider.runtimeType},
@@ -19,6 +20,5 @@ class StateLogger extends ProviderObserver {
   newValue: $newValue
 }
 ''');
-    super.didUpdateProvider(provider, previousValue, newValue, container);
   }
 }
