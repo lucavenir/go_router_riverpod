@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'router/router_notifier.dart';
+import 'router/router_listenable.dart';
 import 'router/routes.dart';
-import 'state/auth.dart';
+import 'state/auth_state.dart';
 import 'utils/state_logger.dart';
 
 void main() {

@@ -1,5 +1,5 @@
-import 'package:code_gen/main.dart';
-import 'package:code_gen/state/auth.dart';
+import 'package:example/main.dart';
+import 'package:example/state/auth_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';

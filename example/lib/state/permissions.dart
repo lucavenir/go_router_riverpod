@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../entities/user_role.dart';
-import 'auth.dart';
+import 'auth_state.dart';
 
 part 'permissions.g.dart';
 

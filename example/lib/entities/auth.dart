@@ -1,17 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
+part 'auth.freezed.dart';
 
 /// Authentication class for this sample application.
 /// It should be self-explanatory.
 @freezed
-class User with _$User {
-  const factory User.signedIn({
+class Auth with _$Auth {
+  const factory Auth.signedIn({
     required int id,
     required String displayName,
     required String email,
     required String token,
   }) = SignedIn;
 
-  const factory User.signedOut() = SignedOut;
+  const factory Auth.signedOut() = SignedOut;
 }

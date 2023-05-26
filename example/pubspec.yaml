@@ -1,4 +1,4 @@
-name: code_gen
+name: example
 description: A riverpod + GoRouter integration example, with code_gen.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../state/auth.dart';
+import '../state/auth_state.dart';
 import 'routes.dart';
 
-part 'router_notifier.g.dart';
+part 'router_listenable.g.dart';
 
 /// A [Listenable] implemented via an [AsyncNotifier].
 /// [GoRouter] accepts a [Listenable] to refresh its internal state, so this is kinda mandatory.
