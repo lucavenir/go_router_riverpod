@@ -1,10 +1,16 @@
 import 'dart:async';
 
+import 'package:example/pages/details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../main.dart';
+import '../pages/admin_page.dart';
+import '../pages/guest_page.dart';
+import '../pages/home_page.dart';
+import '../pages/login_page.dart';
+import '../pages/splash_page.dart';
+import '../pages/user_page.dart';
 import '../state/permissions.dart';
 
 part 'routes.g.dart';
@@ -94,5 +100,21 @@ class GuestRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const GuestPage();
+  }
+}
+
+@TypedGoRoute<DetailsRoute>(path: DetailsRoute.path)
+class DetailsRoute extends GoRouteData {
+  const DetailsRoute(this.id, {this.isNuke = false});
+  final int id;
+  final bool isNuke;
+  static const path = '/details/:id';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return DetailsPage(
+      id,
+      isNuclearCode: isNuke,
+    );
   }
 }

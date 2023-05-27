@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../state/auth_state.dart';
+import '../state/auth_controller.dart';
 import 'routes.dart';
 
 part 'router_listenable.g.dart';
@@ -33,7 +33,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     // One could watch more providers and write logic accordingly
 
     _isAuth = await ref.watch(
-      authNotifierProvider.selectAsync(
+      authControllerProvider.selectAsync(
         (data) => data.map(signedIn: (_) => true, signedOut: (_) => false),
       ),
     );

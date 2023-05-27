@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../entities/auth.dart';
 
-part 'auth_state.g.dart';
+part 'auth_controller.g.dart';
 
 /// A mock of an Authenticated User
 const _dummyUser = Auth.signedIn(
@@ -16,9 +16,9 @@ const _dummyUser = Auth.signedIn(
   token: 'some-updated-secret-auth-token',
 );
 
-/// This notifier holds and handles the authentication state of the application
+/// This controller is an [AsyncNotifier] that holds and handles our authentication state
 @riverpod
-class AuthNotifier extends _$AuthNotifier {
+class AuthController extends _$AuthController {
   late SharedPreferences _sharedPreferences;
   static const _sharedPrefsKey = 'token';
 
