@@ -103,6 +103,7 @@ class GuestRoute extends GoRouteData {
   }
 }
 
+/// This route shows how to parametrize a simple page and how to pass a simple query parameter.
 @TypedGoRoute<DetailsRoute>(path: DetailsRoute.path)
 class DetailsRoute extends GoRouteData {
   const DetailsRoute(this.id, {this.isNuke = false});

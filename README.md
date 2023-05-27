@@ -1,9 +1,18 @@
-# Go Router + Riverpod Examples
+# GoRouter + Riverpod integration
 
-This repo contains a plethora of examples on how to integrate [GoRouter] and [Riverpod] altogether.
+This repo contains a simple example on how to integrate [GoRouter] and [Riverpod] altogether.
+There's also another example about GoRouter + Riverpod + **Firebase** integrations.
 
-These examples are community driven and strive to represent the "best" solution we've found.
-Every example in here is a simple mock of a login.
+This example is community driven and strives to represent the "best" solution we've found.
+
+## The example, TLDR
+Here's what happens when you run the app:
+- There's a simple mock of a login. Tap to login (mock).
+- The authentication state is persisted with sharedPrefs. 
+- Afterwards, your _authorization_ is checked, and you get redirected based on that (mock).
+- Based on your role, you get to see three different pages.
+- On two out of the three pages, an async result is displayed, there (mock).
+- Finally, when the async result is ready, you're free to tap an element to see its details.
 
 ## Special Thanks
 **BIG THANKS** to...
@@ -11,19 +20,19 @@ Every example in here is a simple mock of a login.
 - @[the whole riverpod discord community] for the discussions we've enjoyed around this problem
 - @rrousselGit for creating this _great_ ecosystem!
 
-## Which example should I read or use?
+## Is there something _without_ codegen or / and hooks?
 
-I do realize there are _a lot_ of examples on this repo.
+No, not at this moment in time. PRs are welcome, but chances are that I'll maintain the codegen and firebase (based on codegen) examples only.
 
-After putting a lot of thought, here's a quick guide to help you choose.
+## What about _older_ examples, with legacy versions of the aforementioned libraries?
 
-1. Check the `complete_example` folder for a full example containing the latest versions of riverpod and go router.
-2. Check the `code_gen` for the same example as `complete_example`, but with the usage of `riverpod_annotation`, `freezed` and `go_router_builder`.
-3. Check the `firebase_example` for a basic firebase integration with the two libraries.
-4. Check the `legacy` folder for older, and possibly simpler examples. These examples are "old", but could still be useful. Some are to be discarded entirely, though (WIP).
+For the same reason above, I stopped maintaining legacy integrations. It just doesn't makes sense, since there's a potentially unlimited amount of combinations to take care of.
+
+Use `git`. You'll find _a lot_ of folders full of old examples.
 
 ## Something feels off....
 Please consider starring this mini-repo if you found it useful.
+Also please consider opening an issue or a PR if you think you can contribute in here. Don't be shy!
 
 If you didn't, or if you want to contribute in any way, a discussion about improving this example can be found [here].
 
