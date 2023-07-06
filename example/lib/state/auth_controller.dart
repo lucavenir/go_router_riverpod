@@ -76,7 +76,7 @@ class AuthController extends _$AuthController {
 
   /// Internal method used to listen authentication state changes.
   /// When the auth object is in a loading state, nothing happens.
-  /// When the auth object is in a error state, we choose to remove the token
+  /// When the auth object is in an error state, we choose to remove the token
   /// Otherwise, we expect the current auth value to be reflected in our persitence API
   void _persistenceRefreshLogic() {
     ref.listenSelf((_, next) {
