@@ -1,7 +1,7 @@
 # GoRouter + Riverpod integration
 
 This repo contains a simple example on how to integrate [GoRouter] and [Riverpod] altogether.
-There's also another example about GoRouter + Riverpod + **Firebase** integrations.
+There's also another (outdated as of now!) example about GoRouter + Riverpod + **Firebase** integrations.
 
 This example is community driven and strives to represent the "best" solution we've found.
 
@@ -19,6 +19,8 @@ Here's what happens when you run the app:
 - @[anyone] who has ever contributed in here
 - @[the whole riverpod discord community] for the discussions we've enjoyed around this problem
 - @rrousselGit for creating this _great_ ecosystem!
+
+Special thanks to @AhmedLSayed9 for showing a great simplification!
 
 ## Is there something _without_ codegen or / and hooks?
 
