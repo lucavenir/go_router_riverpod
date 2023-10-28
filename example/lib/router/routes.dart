@@ -15,28 +15,16 @@ import '../state/permissions.dart';
 
 part 'routes.g.dart';
 
-@TypedGoRoute<SplashRoute>(path: SplashRoute.path)
-class SplashRoute extends GoRouteData {
-  const SplashRoute();
-  static const path = '/splash';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const SplashPage();
-  }
-}
-
 @TypedGoRoute<HomeRoute>(
-  path: HomeRoute.path,
+  path: '/',
   routes: [
-    TypedGoRoute<AdminRoute>(path: AdminRoute.path),
-    TypedGoRoute<UserRoute>(path: UserRoute.path),
-    TypedGoRoute<GuestRoute>(path: GuestRoute.path),
+    TypedGoRoute<AdminRoute>(path: 'admin'),
+    TypedGoRoute<UserRoute>(path: 'user'),
+    TypedGoRoute<GuestRoute>(path: 'guest'),
   ],
 )
 class HomeRoute extends GoRouteData {
   const HomeRoute();
-  static const path = '/home';
 
   /// Important note on this redirect function: this isn't reactive.
   /// No redirect will be triggered on a user role change.
@@ -62,10 +50,19 @@ class HomeRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<LoginRoute>(path: LoginRoute.path)
+@TypedGoRoute<SplashRoute>(path: '/splash')
+class SplashRoute extends GoRouteData {
+  const SplashRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SplashPage();
+  }
+}
+
+@TypedGoRoute<LoginRoute>(path: '/login')
 class LoginRoute extends GoRouteData {
   const LoginRoute();
-  static const path = '/login';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -75,7 +72,6 @@ class LoginRoute extends GoRouteData {
 
 class AdminRoute extends GoRouteData {
   const AdminRoute();
-  static const path = 'admin';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -85,7 +81,6 @@ class AdminRoute extends GoRouteData {
 
 class UserRoute extends GoRouteData {
   const UserRoute();
-  static const path = 'user';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -95,7 +90,6 @@ class UserRoute extends GoRouteData {
 
 class GuestRoute extends GoRouteData {
   const GuestRoute();
-  static const path = 'guest';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -104,12 +98,11 @@ class GuestRoute extends GoRouteData {
 }
 
 /// This route shows how to parametrize a simple page and how to pass a simple query parameter.
-@TypedGoRoute<DetailsRoute>(path: DetailsRoute.path)
+@TypedGoRoute<DetailsRoute>(path: '/details/:id')
 class DetailsRoute extends GoRouteData {
   const DetailsRoute(this.id, {this.isNuke = false});
   final int id;
   final bool isNuke;
-  static const path = '/details/:id';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
