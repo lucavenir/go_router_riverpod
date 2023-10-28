@@ -41,8 +41,10 @@ GoRouter router(RouterRef ref) {
     debugLogDiagnostics: true,
     routes: $appRoutes,
     redirect: (context, state) {
-      final auth = isAuth.value.valueOrNull;
-      if (auth == null) return const SplashRoute().location;
+      if (isAuth.value.unwrapPrevious().hasError) return const LoginRoute().location;
+      if (isAuth.value.isLoading || !isAuth.value.hasValue) return const SplashRoute().location;
+
+      final auth = isAuth.value.requireValue;
 
       final isSplash = state.uri.path == const SplashRoute().location;
       if (isSplash) return auth ? const HomeRoute().location : const LoginRoute().location;
