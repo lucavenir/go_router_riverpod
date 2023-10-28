@@ -1,7 +1,7 @@
+import 'package:example/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../state/auth_controller.dart';
 import '../state/cute_rabbits.dart';
 import '../state/nuclear_codes.dart';
 import '../widgets/my_sliver_list.dart';
@@ -44,14 +44,7 @@ class AdminPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: ElevatedButton.icon(
-                    onPressed: ref.read(authControllerProvider.notifier).logout,
-                    icon: const Icon(Icons.logout),
-                    label: const Text('Logout'),
-                  ),
-                ),
+                const LogoutButton(),
               ],
             ),
           ),

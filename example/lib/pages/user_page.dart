@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../state/auth_controller.dart';
 import '../state/cute_rabbits.dart';
+import '../widgets/logout_button.dart';
 import '../widgets/my_sliver_list.dart';
 import '../widgets/user_title.dart';
 
@@ -40,14 +40,7 @@ class UserPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: ElevatedButton.icon(
-                    onPressed: ref.read(authControllerProvider.notifier).logout,
-                    icon: const Icon(Icons.logout),
-                    label: const Text('Logout'),
-                  ),
-                ),
+                const LogoutButton(),
               ],
             ),
           ),

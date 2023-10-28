@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../state/auth_controller.dart';
+import '../widgets/logout_button.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -10,16 +10,13 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Your phenomenal app')),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Home Page'),
-            const Text("There's nothing much you can do, here"),
-            ElevatedButton(
-              onPressed: ref.read(authControllerProvider.notifier).logout,
-              child: const Text('Logout'),
-            ),
+            Text('Home Page'),
+            Text("There's nothing much you can do, here"),
+            LogoutButton(),
           ],
         ),
       ),

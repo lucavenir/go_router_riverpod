@@ -33,32 +33,31 @@ class AuthController extends _$AuthController {
 
   /// Tries to perform a login with the saved token on the persistant storage.
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
-  Future<Auth> _loginRecoveryAttempt() async {
+  Future<Auth> _loginRecoveryAttempt() {
     try {
       final savedToken = _sharedPreferences.getString(_sharedPrefsKey);
       if (savedToken == null) throw const UnauthorizedException('No auth token found');
 
-      return await _loginWithToken(savedToken);
+      return _loginWithToken(savedToken);
     } catch (_, __) {
-      await _sharedPreferences.remove(_sharedPrefsKey);
-      return const Auth.signedOut();
+      _sharedPreferences.remove(_sharedPrefsKey).ignore();
+      return Future.value(const Auth.signedOut());
     }
   }
 
   /// Mock of a request performed on logout (might be common, or not, whatevs).
   Future<void> logout() async {
     await Future<void>.delayed(networkRoundTripTime);
-    state = const AsyncValue<Auth>.data(Auth.signedOut());
+    state = const AsyncData(Auth.signedOut());
   }
 
   /// Mock of a successful login attempt, which results come from the network.
   Future<void> login(String email, String password) async {
-    state = await AsyncValue.guard<Auth>(() async {
-      return Future.delayed(
-        networkRoundTripTime,
-        () => _dummyUser,
-      );
-    });
+    final result = await Future.delayed(
+      networkRoundTripTime,
+      () => _dummyUser,
+    );
+    state = AsyncData(result);
   }
 
   /// Mock of a login request performed with a saved token.
@@ -103,4 +102,4 @@ class UnauthorizedException implements Exception {
 }
 
 /// Mock of the duration of a network request
-final networkRoundTripTime = 750.milliseconds;
+final networkRoundTripTime = 2.seconds;
