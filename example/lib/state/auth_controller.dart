@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/entities/user_role.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +32,7 @@ class AuthController extends _$AuthController {
     return _loginRecoveryAttempt();
   }
 
-  /// Tries to perform a login with the saved token on the persistant storage.
+  /// Tries to perform a login with the saved token on the persistent storage.
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
   Future<Auth> _loginRecoveryAttempt() {
     try {
@@ -76,7 +77,7 @@ class AuthController extends _$AuthController {
   /// Internal method used to listen authentication state changes.
   /// When the auth object is in a loading state, nothing happens.
   /// When the auth object is in an error state, we choose to remove the token
-  /// Otherwise, we expect the current auth value to be reflected in our persitence API
+  /// Otherwise, we expect the current auth value to be reflected in our persistence API
   void _persistenceRefreshLogic() {
     ref.listenSelf((_, next) {
       if (next.isLoading) return;

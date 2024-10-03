@@ -12,8 +12,8 @@
     "editor.formatOnPaste": true,
     "editor.maxTokenizationLineLength": 200,
     "editor.codeActionsOnSave": {
-      "source.fixAll": true,
-      "source.organizeImports": true
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
     }
   },
 }

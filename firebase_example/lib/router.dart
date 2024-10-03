@@ -47,12 +47,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Returning `null` means "we are not authorized"
       final isAuth = authState.valueOrNull != null;
 
-      final isSplash = state.location == SplashPage.routeLocation;
+      final isSplash = state.matchedLocation == SplashPage.routeLocation;
       if (isSplash) {
         return isAuth ? HomePage.routeLocation : LoginPage.routeLocation;
       }
 
-      final isLoggingIn = state.location == LoginPage.routeLocation;
+      final isLoggingIn = state.matchedLocation == LoginPage.routeLocation;
       if (isLoggingIn) return isAuth ? HomePage.routeLocation : null;
 
       return isAuth ? null : SplashPage.routeLocation;

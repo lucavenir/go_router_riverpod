@@ -46,17 +46,17 @@ class MySliverList extends StatelessWidget {
                   ),
                   title: Text(title),
                 ),
-              )
+              ),
           ];
         },
         error: (error, stackTrace) => [
           const Text('Woah, something went wrong'),
           const SizedBox(height: 20),
-          const Text('Welp, home nothing goes boom, yet')
+          const Text('Welp, home nothing goes boom, yet'),
         ],
         loading: () => [
           const Center(child: CircularProgressIndicator()),
-          const Text('Loading your nuclear codes...')
+          const Text('Loading your nuclear codes...'),
         ],
       ),
     );
