@@ -1,12 +1,13 @@
 import 'package:example/utils/cache_for.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:time/time.dart';
 
 part 'cute_rabbits.g.dart';
 
+/// A simple provider that fetches a list of cute rabbits after a short delay
 @riverpod
-FutureOr<List<(IconData, String)>> cuteRabbits(CuteRabbitsRef ref) async {
+FutureOr<List<(IconData, String)>> cuteRabbits(Ref ref) async {
   // A proper mock of a simple request. I guess adopting a rabbit is simple.
   await Future<void>.delayed(800.milliseconds);
 

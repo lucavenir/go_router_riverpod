@@ -1,7 +1,9 @@
 import 'package:example/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 
+/// splash page shown while we check authentication status
 class SplashPage extends StatelessWidget {
+  /// splash page shown while we check authentication status
   const SplashPage({super.key});
 
   @override
@@ -13,7 +15,7 @@ class SplashPage extends StatelessWidget {
           children: [
             Text('Splash Page'),
             SizedBox(height: 16),
-            LoadingSpinner(),
+            SmallLoadingSpinner(),
           ],
         ),
       ),

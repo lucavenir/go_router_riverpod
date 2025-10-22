@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 
-import 'package:example/router/routes.dart';
+import 'package:example/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MySliverList extends StatelessWidget {
   const MySliverList({
-    super.key,
     required this.elements,
+    super.key,
     this.isNuke = false,
   });
   final AsyncValue<List<(IconData, String)>> elements;
@@ -25,8 +25,10 @@ class MySliverList extends StatelessWidget {
                 child: ListTile(
                   onTap: () async {
                     final id = icon.hashCode + title.hashCode;
-                    final willItExplode =
-                        await DetailsRoute(id, isNuke: isNuke).push<bool>(context);
+                    final willItExplode = await DetailsRoute(
+                      id,
+                      isNuke: isNuke,
+                    ).push<bool>(context);
 
                     if (willItExplode == null || !willItExplode) return;
                     if (!context.mounted) return;
@@ -34,7 +36,9 @@ class MySliverList extends StatelessWidget {
                     final object = isNuke ? 'nuke' : 'cute rabbit';
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Sorry, but your $object exploded. Best luck next time!'),
+                        content: Text(
+                          'Sorry, but your $object exploded. Best luck next time!',
+                        ),
                       ),
                     );
                   },

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LoadingSpinner extends StatelessWidget {
-  const LoadingSpinner({super.key});
+/// A small loading spinner widget
+class SmallLoadingSpinner extends StatelessWidget {
+  /// A small loading spinner widget
+  const SmallLoadingSpinner({super.key});
 
   @override
   Widget build(BuildContext context) {
