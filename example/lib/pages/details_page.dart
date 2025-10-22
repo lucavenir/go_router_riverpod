@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DetailsPage extends ConsumerWidget {
   const DetailsPage(this.detailCode, {required this.isNuclearCode, super.key});

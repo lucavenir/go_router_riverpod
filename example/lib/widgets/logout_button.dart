@@ -1,18 +1,44 @@
+import 'package:example/router/router.dart';
+import 'package:example/state/auth_controller.dart';
+import 'package:example/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/experimental/mutation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../state/auth_controller.dart';
-import 'action_button.dart';
-
-class LogoutButton extends ConsumerWidget {
+/// a button that triggers the logout action
+class LogoutButton extends ConsumerStatefulWidget {
+  /// a button that triggers the logout action
   const LogoutButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ActionButton(
-      onPressed: ref.read(authControllerProvider.notifier).logout,
+  ConsumerState<LogoutButton> createState() => _LogoutButtonState();
+}
+
+class _LogoutButtonState extends ConsumerState<LogoutButton> {
+  @override
+  Widget build(BuildContext context) {
+    final logout = ref.watch(AuthController.logoutMutation);
+
+    return ElevatedButton.icon(
+      onPressed: switch (logout) {
+        MutationPending() => null,
+        _ => _logout,
+      },
       icon: const Icon(Icons.logout),
-      label: const Text('Logout'),
+      label: switch (logout) {
+        MutationPending() => const SmallLoadingSpinner(),
+        _ => const Text('Logout'),
+      },
     );
+  }
+
+  Future<void> _logout() async {
+    await AuthController.logoutMutation.run(ref, (ref) {
+      return ref.get(authControllerProvider.notifier).logout();
+    });
+
+    if (!mounted) return;
+
+    const SplashRoute().go(context);
   }
 }

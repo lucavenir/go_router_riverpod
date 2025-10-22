@@ -1,6 +1,6 @@
 import 'package:example/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../state/cute_rabbits.dart';
 import '../state/nuclear_codes.dart';

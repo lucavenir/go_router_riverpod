@@ -1,19 +1,28 @@
+import 'package:example/logs/talker.dart';
+import 'package:example/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'router/router.dart';
-import 'utils/state_logger.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      observers: [StateLogger()],
-      child: MyAwesomeApp(),
+    ProviderScope(
+      observers: [
+        TalkerRiverpodObserver(
+          talker: talker,
+          settings: const TalkerRiverpodLoggerSettings(
+            printProviderDisposed: true,
+          ),
+        ),
+      ],
+      child: const MyAwesomeApp(),
     ),
   );
 }
 
+/// root of our application
 class MyAwesomeApp extends ConsumerWidget {
+  /// root of our application
   const MyAwesomeApp({super.key});
 
   @override
@@ -22,7 +31,7 @@ class MyAwesomeApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: router,
-      title: 'hooks_riverpod + go_router Demo',
+      title: 'flutter_riverpod + go_router Demo',
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),

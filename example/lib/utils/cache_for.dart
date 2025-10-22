@@ -1,8 +1,10 @@
 import 'dart:async';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-extension CacheFor<T> on AutoDisposeRef<T> {
+/// An extension on [Ref] that allows caching a provider for a given duration.
+extension CacheFor on Ref {
+  /// keeps the provider alive for at least [duration] from invocation.
   void cacheFor(Duration duration) {
     final link = keepAlive();
     final timer = Timer(duration, link.close);
