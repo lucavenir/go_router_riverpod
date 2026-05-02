@@ -1,3 +1,12 @@
+# IMPORTANT NOTICE
+
+This repo is now archived, **because we're migrating away from GitHub**.
+You'll find the newest examples in [here](https://codeberg.org/lucavenir/riverpod_suite).
+
+Cheers!
+
+*~v*
+
 # GoRouter + Riverpod integration
 
 This repo contains a simple example on how to integrate [GoRouter] and [Riverpod] altogether.
